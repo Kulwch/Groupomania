@@ -20,12 +20,12 @@ exports.signup = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
-    User.findOne({email: req.body.email}).then(user => {
+    User.findOne({where: {email: req.body.email}}).then((user) => {
         if(!user) {
             return res.status(401).json({message: 'Utilisateur non trouvé '});
         }
         bcrypt.compare(req.body.password, user.password)
-            .then(valid => {
+            .then((valid) => {
                 if (!valid){
                     return res.status(401).json({message: 'Mot de passe incorrect '
         });
@@ -43,3 +43,7 @@ exports.login = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error }));
 };
+
+exports.updateProfile = (req, res, next) => {
+    
+}

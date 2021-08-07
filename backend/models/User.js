@@ -5,9 +5,9 @@ const User = sequelize.define('User', {
   // Model attributes are defined here
   user_id: {          
         type:DataTypes.INTEGER,
-        autoIncrement:true,
-        allowNull:false,
-        primaryKey:true
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true
     },
   firstName: {
     type: DataTypes.STRING,
@@ -24,7 +24,12 @@ const User = sequelize.define('User', {
   password: {
       type: DataTypes.STRING,
       allowNull: false
+  },
+  avatarUrl: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
+
 }, {
   // Other model options go here
 });
