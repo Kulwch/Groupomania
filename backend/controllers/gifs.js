@@ -1,17 +1,16 @@
-const Gif = require("../models/Gif")
+const Gif = require("../models/Gif");
+const Comment = require("../models/Comment");
 const fs = require('fs');
 
 exports.getAllGifs = (req, res, next) => {
-    Gif.find()
+    Gif.findAll()
     .then((gifs) => res.status(200).json(gifs))
     .catch(error => res.status(400).json({ error })
 )};
 
 
 exports.getOneGif = (req, res, next) => {
-    Gif.findOne({
-
-    })
+    Gif.findOne({ _id: req.params.id  })
     .then((gif) => res.status(200).json(gif))
     .catch((error) => res.status(404).json({ error })
 )};
@@ -30,11 +29,12 @@ exports.createGif = (req, res, next) => {
 exports.modifyGif = (req, res, next) => {
     const gifObject = req.file ?
         {
-            ...JSON.parse(req.body.gif),
+            ...req.body.gif,
             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...req.body };
-    Gif.updateOne({ _id: req.params.id }, { ...gifObject, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Objet modifié !' }))
+    Gif.findOne({ _id: req.params.id })
+        .then(gif => gif.set({gif}, {...gifObject}))
+        .then(() => res.status(200).json({ message: 'Gif modifié !' }))
         .catch(error => res.status(400).json({ error }));
 }
 
@@ -43,22 +43,72 @@ exports.deleteGif = (req, res, next) => {
         .then(gif => {
             const filename = gif.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
-                Gif.deleteOne({ _id: req.params.id })
-                    .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
+                gif.destroy()
+                    .then(() => res.status(200).json({ message: 'Gif supprimé !' }))
                     .catch(error => res.status(400).json({ error }));
             });
         })
         .catch(error => res.status(500).json({ error }));
 }
 
+
 exports.rateOneGif = (req, res, next) => {
-   
+   Gif.findOne({ _id: req.params.id }).then((gif) => {
+
+        switch (req.body.like) {
+            case 0:                
+                    
+                break;
+
+            case 1:                
+                                
+                break;
+            
+            case -1:                
+                         
+                break;
+
+            default:
+                return 'Requête invalide';
+        }
+    })
+    .catch((error) => res.status(404).json({error}));
 }
 
 exports.getAllComments = (req, res, next) => {
-
+    Gif.findOne({ _id: req.params.id }).then((gif) => {
+        Comment.findAll()
+        .then((comments) => res.status(200).json(comments))
+        .catch(error => res.status(400).json({error}))
+    })
+    .catch(error => res.status(404).json({error}))
 }
 
-exports.postCommentGif = (req, res, next) => {
+exports.postComment = (req, res, next) => {
+    Gif.findOne({ _id: req.params.id }).then((gif) => {
+        const comment = Comment.build({
+            gifId: req.params.id,
+            userId: req.body.userId,
+            content: req.body.content
+        });
+        comment.save()
+        .then(() => res.status(201).json({ message: 'commentaire publié !'}))
+        .catch(error => res.status(400).json({ error }))
+    })
+    .catch(error => res.status(400).json({ error }))
+}
+
+exports.modifyComment = (req, res, next) => {
+     Gif.findOne({ _id: req.params.id }).then((gif) => {
+         const commentObject = { ...req.body };
+    Comment.findOne({_id: req.params.id})
+        .then(comment => comment.set({comment}, {...commentObject}))
+        .then(() => res.status(200).json({ message: 'commentaire modifié !' }))
+        .catch(error => res.status(400).json({ error }));
+    })
+    .catch(error => res.status(400).json({ error }))
+}
+
+exports.deleteComment = (req, res, next) => {
 
 }

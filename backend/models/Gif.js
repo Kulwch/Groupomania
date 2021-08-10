@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, DATE } = require('sequelize');
 const sequelize = require('../utils/database')
 
 const Gif = sequelize.define('Gif', {
@@ -21,7 +21,7 @@ const Gif = sequelize.define('Gif', {
         allowNull: false
     }
 }, {
-  // Other model options go here
+  paranoid: true,
 });
 
 module.exports = Gif;

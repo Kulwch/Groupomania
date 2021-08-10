@@ -14,7 +14,7 @@ try {
   console.error('Unable to connect to the database:', error);
 }
 sequelize.sync()
-sequelize.sync({ force: true })
+
 
 const app = express();
 
