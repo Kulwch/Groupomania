@@ -110,5 +110,11 @@ exports.modifyComment = (req, res, next) => {
 }
 
 exports.deleteComment = (req, res, next) => {
-
+    Gif.findOne({ _id: req.params.id }).then((gif) => {
+    Comment.findOne({_id: req.params.id})
+        .then((comment) => comment.destroy())
+        .then(() => res.status(200).json({ message: 'commentaire effacé !'}))
+        .catch(error => res.status(400).json({error}))
+    })
+    .catch(error => res.status(400).json({ error }));
 }
