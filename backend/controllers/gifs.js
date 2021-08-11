@@ -85,36 +85,20 @@ exports.getAllComments = (req, res, next) => {
 }
 
 exports.postComment = (req, res, next) => {
-    Gif.findOne({ _id: req.params.id }).then((gif) => {
-        const comment = Comment.build({
-            gifId: req.params.id,
-            userId: req.body.userId,
-            content: req.body.content
-        });
-        comment.save()
-        .then(() => res.status(201).json({ message: 'commentaire publié !'}))
-        .catch(error => res.status(400).json({ error }))
-    })
+    const comment = Comment.build({
+        gifId: req.params.id,
+        userId: req.body.userId,
+        content: req.body.content
+    });
+    comment.save()
+    .then(() => res.status(201).json({ message: 'commentaire publié !'}))
     .catch(error => res.status(400).json({ error }))
+    
 }
 
-exports.modifyComment = (req, res, next) => {
-     Gif.findOne({ _id: req.params.id }).then((gif) => {
-         const commentObject = { ...req.body };
+exports.deleteComment = (req, res, next) => {    
     Comment.findOne({_id: req.params.id})
-        .then(comment => comment.set({comment}, {...commentObject}))
-        .then(() => res.status(200).json({ message: 'commentaire modifié !' }))
-        .catch(error => res.status(400).json({ error }));
-    })
-    .catch(error => res.status(400).json({ error }))
-}
-
-exports.deleteComment = (req, res, next) => {
-    Gif.findOne({ _id: req.params.id }).then((gif) => {
-    Comment.findOne({_id: req.params.id})
-        .then((comment) => comment.destroy())
+        .then(comment => comment.destroy())
         .then(() => res.status(200).json({ message: 'commentaire effacé !'}))
         .catch(error => res.status(400).json({error}))
-    })
-    .catch(error => res.status(400).json({ error }));
 }

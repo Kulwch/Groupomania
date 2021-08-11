@@ -31,7 +31,7 @@ const User = sequelize.define('User', {
   }
 
 }, {
-  // Other model options go here
+  isAdmin: false
 });
 
 // `sequelize.define` also returns the model

@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes, DATE } = require('sequelize');
 const sequelize = require('../utils/database');
+const User = require('./User');
 
 const Comment = sequelize.define('Comment', {
     commentId: {
@@ -14,7 +15,10 @@ const Comment = sequelize.define('Comment', {
     },
     userId: {
         type: DataTypes.INTEGER,
-        allowNull: true
+        references: {
+            model: 'User',
+            key: 'id'
+        }
     },
     content: {
         type: DataTypes.STRING,
@@ -27,3 +31,10 @@ const Comment = sequelize.define('Comment', {
 );
 
 module.exports = Comment;
+
+Comment.hasOne(User, {
+    foreignKey: {
+        name: 'userId', 
+        allowNull: false
+    }
+})
