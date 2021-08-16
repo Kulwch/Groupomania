@@ -11,6 +11,8 @@
     "node-sass": "^6.0.1"
   },
   "devDependencies": {
+    "helmet": "^4.6.0",
+    "password-validator": "^5.1.1",
     "sequelize": "^5.22.4",
     "sequelize-cli": "^6.2.0"
   }
