@@ -4,6 +4,7 @@ const {
   Model
 } = require('sequelize');
 const sequelize = require('../models/index.js');
+const User = require('../models/User');
 const Comment = require("../models/Comment");
 
 exports.getAllComments = (req, res, next) => {
@@ -12,16 +13,15 @@ exports.getAllComments = (req, res, next) => {
         .catch(error => res.status(400).json({error}))
 }
 
-exports.postComment = (req, res, next) => {
-    const comment = sequelize.Comment.build({
-        gifId: req.params.id,
-        userId: req.body.userId,
-        content: req.body.content
-    });
-    comment.save(res)
-    .then(() => res.status(201).json({ message: 'commentaire publié !'}))
-    .catch(error => res.status(400).json({ error }))    
-}
+exports.postComment = (req, res, next) => {    
+        sequelize.Comment.create({
+            gifId: req.params.id,
+            userId: req.body.userId,
+            content: req.body.content
+        })
+        .then(() => res.status(201).json({ message: 'commentaire publié !'}))
+        .catch(error => res.status(400).json({ error }))   
+};
 
 exports.deleteComment = (req, res, next) => {    
     sequelize.Comment.findOne({_id: req.params.id})

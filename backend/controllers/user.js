@@ -34,10 +34,10 @@ exports.login = (req, res, next) => {
         });
                 }
                 res.status(200).json({
-                    userId: user._id,
+                    userId: user.id,
                     token: jwt.sign(
-                        { userId: user._id },
-                        process.env.TOKEN_KEY.toString(),
+                        { userId: user.id },
+                        process.env.TOKEN_KEY,
                         { expiresIn: '24h' }
                     )
                 });                

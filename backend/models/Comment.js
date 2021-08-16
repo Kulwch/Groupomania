@@ -23,7 +23,10 @@ module.exports = (sequelize, DataTypes) => {
   Comment.init({
     gifId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
-    content: DataTypes.TEXT
+    content: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        }
   }, {
     sequelize,
     modelName: 'Comment',
