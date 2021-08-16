@@ -1,40 +1,33 @@
-const { Sequelize, DataTypes, DATE } = require('sequelize');
-const sequelize = require('../utils/database');
-const User = require('./User');
-
-const Comment = sequelize.define('Comment', {
-    commentId: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Comment extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+      models.Comment.belongsTo(models.Gif, {
+        foreignKey: 'gifId',
         allowNull: false,
-        primaryKey: true
-    },
-    gifId: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
-    userId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: 'User',
-            key: 'id'
-        }
-    },
-    content: {
-        type: DataTypes.STRING,
-        allowNull: true
-    }
-}, 
-    {
-    paranoid: true,
-    }
-);
-
-module.exports = Comment;
-
-Comment.hasOne(User, {
-    foreignKey: {
-        name: 'userId', 
+      });
+      models.Comment.belongsTo(models.User, {
+        foreignKey: 'userId',
         allowNull: false
+      })
     }
-})
+  }
+  Comment.init({
+    gifId: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
+    content: DataTypes.TEXT
+  }, {
+    sequelize,
+    modelName: 'Comment',
+    paranoid: true
+  });
+  return Comment;
+};

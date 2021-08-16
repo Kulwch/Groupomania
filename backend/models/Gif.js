@@ -1,27 +1,31 @@
-const { Sequelize, DataTypes, DATE } = require('sequelize');
-const sequelize = require('../utils/database')
-
-const Gif = sequelize.define('Gif', {
-    gif_id: {          
-        type:DataTypes.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true
-    },
-    userId: {
-    type: DataTypes.STRING,
-    allowNull: false
-    }, 
-    statusText: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    imageUrl: {
-        type: DataTypes.STRING,
-        allowNull: false
+'use strict';
+const {
+  Model
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Gif extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate(models) {
+        models.Gif.belongsTo(models.User, {
+            foreignKey: {
+            allowNull: false
+            }
+        });
+        models.Gif.hasMany(models.Comment);
     }
-}, {
-  paranoid: true,
-});
-
-module.exports = Gif;
+  }
+  Gif.init({
+    userId: DataTypes.INTEGER,
+    statusText: DataTypes.STRING,
+    imageUrl: DataTypes.STRING
+  }, {
+    sequelize,
+    modelName: 'Gif',
+    paranoid: true
+  });
+  return Gif;
+};

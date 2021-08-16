@@ -12,9 +12,7 @@ router.delete('/:id', auth, gifCtrl.deleteGif);
 router.get('/:id', auth, gifCtrl.getOneGif);
 router.get('/', auth, gifCtrl.getAllGifs);
 router.post('/:id/like', auth, gifCtrl.rateOneGif);
-router.get('/:id/comments', auth, gifCtrl.getAllComments);
-router.post('/:id/comments', auth, gifCtrl.postComment);
-router.delete('/:id/comments/:commentId', auth, gifCtrl.deleteComment);
+
 
 module.exports = router;
 

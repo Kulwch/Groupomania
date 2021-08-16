@@ -1,19 +1,11 @@
 const express = require('express');
 const path = require('path');
-const { Sequelize } = require('sequelize');
-const sequelize = require('./utils/database')
 const User = require('./models/User');
 const  Gif = require('./models/Gif');
 const userRoutes = require('./routes/user');
 const gifRoutes = require('./routes/gifs')
-
-try {
-  sequelize.authenticate();
-  console.log('Connection has been established successfully.');
-} catch (error) {
-  console.error('Unable to connect to the database:', error);
-}
-sequelize.sync()
+const commentRoutes = require('./routes/comment');
+const db = require('./models');
 
 
 const app = express();
@@ -30,5 +22,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/auth', userRoutes);
 app.use('/api/gifs', gifRoutes);
+app.use('/api/comments', commentRoutes);
 
 module.exports = app;
