@@ -1,5 +1,4 @@
 const fs = require('fs')
-const { REPL_MODE_SLOPPY } = require('node:repl')
 const path = require('path')
 const Sequelize = require('sequelize')
 const dotenv = require('dotenv').config()

@@ -7,6 +7,7 @@ const User = require('../models/User');
 const dotenv = require('dotenv').config();
 
 exports.signup = (req, res, next) => {
+    
      bcrypt.hash(req.body.password, 10)
     .then(hash => {
         const user = sequelize.User.build({ 
@@ -48,7 +49,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.getProfile = (req, res, next) => {
-    sequelize.User.findOne({where: {_id: req.params.id}})
+    sequelize.User.findOne({_id: req.params.id})
         .then(user => res.status(200).json({user}))
         .catch(error => res.status(404).json({error}))
 };

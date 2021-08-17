@@ -1,8 +1,4 @@
-const {
-  Sequelize,
-  DataTypes,
-  Model
-} = require('sequelize');
+const Sequelize = require('sequelize');
 const sequelize = require('../models/index.js');
 const Gif = require("../models/Gif");
 const fs = require('fs');
