@@ -20,8 +20,21 @@ module.exports = (sequelize, DataTypes) => {
   }
   Gif.init({
     userId: DataTypes.INTEGER,
-    statusText: DataTypes.STRING,
-    imageUrl: DataTypes.STRING
+    statusText: {
+      type: DataTypes.STRING,
+      validate: {
+        is: /^([\s\S]){2,255}([\s\.])/,
+        len: [2, 255]
+      }
+    },
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        is: /^([a-zA-Z]\:|\\\\[^\/\\:*?"<>|]+\\[^\/\\:*?"<>|]+)(\\[^\/\\:*?"<>|]+)+(\.[^\/\\:*?"<>|]+)$/,
+        notEmpty: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Gif',

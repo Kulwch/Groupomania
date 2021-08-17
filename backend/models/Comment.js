@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     content: {
             type: DataTypes.TEXT,
             allowNull: false,
+            validate: {
+              notEmpty: true,
+              is: /^([\s\S]){2,500}([\s\.])/,
+              len: [2, 500]
+            }
         }
   }, {
     sequelize,
