@@ -49,7 +49,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.getProfile = (req, res, next) => {
-    sequelize.User.findOne({_id: req.params.id})
+    sequelize.User.findOne({attributes: ['id', 'firstName', 'lastName', 'email'], where: {_id: req.user.id}})
         .then(user => res.status(200).json({user}))
         .catch(error => res.status(404).json({error}))
 };
