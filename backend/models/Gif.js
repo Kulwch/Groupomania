@@ -1,4 +1,5 @@
 'use strict';
+const { timeStamp } = require("console");
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class Gif extends Model {
@@ -25,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
 		{
       userId: {
       //foreignKey of gifs table
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     statusText: {

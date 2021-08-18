@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../models/index.js');
+const getUserId = require("../utils/getUserId");
 const Gif = require("../models/Gif");
 const fs = require('fs');
 
@@ -18,7 +19,7 @@ exports.getOneGif = (req, res, next) => {
 
 exports.createGif = (req, res, next) => {
     sequelize.Gif.create({
-        userId: req.user.id,
+        userId: getUserId(req),
         statusText: req.body.statusText,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     })

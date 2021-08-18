@@ -6,22 +6,17 @@
  * 
  */
 
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const sequelize = require('../models/index.js');
-const dotenv = require('dotenv').config();
+const getUserIdFromToken = require("../utils/getUserId");
 
 module.exports = (req, res, next) => {
+  const userId = req.body.userId;
+  const authorization = req.headers.authorization;
+  
   try {
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
-    const user = sequelize.User.findOne({id: decodedToken.id })
-        if (! user) {
-            throw new Error
-        }
-        req.user = user
-        next()
-  } catch (error) {
+    if (!authorization) throw new Error("Pas d'utilisateur enregistré");
+    if (userId && userId !== getUserIdFromToken(req)) throw new Error("userId non valide");
+    next();
+  } catch (err) {
     res.status(401).json({message: 'Requête non valide !'});
   }
 };

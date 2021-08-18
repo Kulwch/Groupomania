@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../models/index.js');
+const getUserId = require("../utils/getUserId");
 const User = require('../models/User');
 const Comment = require("../models/Comment");
 
@@ -11,8 +12,8 @@ exports.getAllComments = (req, res, next) => {
 
 exports.postComment = (req, res, next) => {    
         sequelize.Comment.create({
-            gifId: req.params.id,
-            userId: req.user.id,
+            gifId: req.body.gifId,
+            userId: getUserId(req),
             content: req.body.content
         })
         .then(() => res.status(201).json({ message: 'commentaire publié !'}))

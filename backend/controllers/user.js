@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const sequelize = require('../models/index.js');
+const getUserId = require("../utils/getUserId");
 const fs = require('fs');
 const User = require('../models/User');
 const dotenv = require('dotenv').config();
@@ -23,7 +24,7 @@ exports.signup = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
-    sequelize.User.findOne({email: req.body.email}).then((user) => {
+    sequelize.User.findOne({ where: {email: req.body.email}}).then((user) => {
         if(!user) {
             return res.status(401).json({message: 'Utilisateur non trouvé '});
         }

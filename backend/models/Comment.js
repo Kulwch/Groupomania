@@ -27,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
 	}
 	Comment.init(
 		{
+    gifId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     content: {
             type: DataTypes.TEXT,
             allowNull: false,
