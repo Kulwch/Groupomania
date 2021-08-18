@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cookieSession = require("cookie-session");
 const User = require('./models/User');
 const  Gif = require('./models/Gif');
 const userRoutes = require('./routes/user');
@@ -7,11 +8,21 @@ const gifRoutes = require('./routes/gifs')
 const commentRoutes = require('./routes/comment');
 const db = require('./models');
 
+
 const helmet = require('helmet');
 
 const app = express();
 
 app.use(helmet());
+app.use(cookieSession({
+  secret: process.env.COOKIE_SECRET.toString(),
+  cookie : {
+    secure : true,
+    httpOnly : true,
+    domain : "http://localhost:3000"
+  }
+}))
+
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');

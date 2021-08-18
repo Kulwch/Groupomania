@@ -10,13 +10,12 @@ exports.signup = (req, res, next) => {
     
      bcrypt.hash(req.body.password, 10)
     .then(hash => {
-        const user = sequelize.User.build({ 
+        sequelize.User.create({ 
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
             password: hash
-        });
-        user.save()
+        })
             .then(() => res.status(201).json({ message: ' Nouvel utilisateur créé !' }))
             .catch( error => res.status(400).json({ error }))
     })

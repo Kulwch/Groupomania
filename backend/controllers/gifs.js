@@ -17,12 +17,11 @@ exports.getOneGif = (req, res, next) => {
 )};
 
 exports.createGif = (req, res, next) => {
-    const gif = sequelize.Gif.build({
-        userId: req.body.userId,
+    sequelize.Gif.create({
+        userId: req.user.id,
         statusText: req.body.statusText,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-    });
-    gif.save(res)
+    })
         .then(() => res.status(201).json({ message: 'gif publié !'}))
         .catch((error) => res.status(400).json({ error }))
 }

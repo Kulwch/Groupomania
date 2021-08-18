@@ -12,27 +12,19 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       models.User.belongsToMany(models.Gif, {
         through: models.Like,
-        foreignKey: 'userId',
-        otherKey: 'gifId'
+        foreignKey: 'UserId',
+        otherKey: 'GifId'
       });
       models.Gif.belongsToMany(models.User, {
         through: models.Like,
-        foreignKey: 'gifId',
-        otherKey: 'userId'
+        foreignKey: 'GifId',
+        otherKey: 'UserId'
       });
-      models.Like.belongsToMany(models.User, {
-        foreignKey: 'userId',
-        as: 'user'
-      });
-      models.Like.belongsToMany(models.Gif, {
-        foreignKey: 'gifId',
-        as: 'gif'
-      });
+      models.Like.belongsTo(models.User);
+      models.Like.belongsTo(models.Gif);
     }
   }
   Like.init({
-    gifId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Like',

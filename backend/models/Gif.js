@@ -1,30 +1,36 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Gif extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-        models.Gif.belongsTo(models.User, {
-            foreignKey: {
-            allowNull: false
-            }
+	class Gif extends Model {
+		/**
+		 * Helper method for defining associations.
+		 * This method is not a part of Sequelize lifecycle.
+		 * The `models/index` file will call this method automatically.
+		 */
+		static associate(models) {
+			// define association here
+			models.Gif.hasMany(
+				models.Comment,
+				{ foreignKey: "gifId" },
+				{ onDelete: "cascade" }
+			);
+
+			models.Gif.belongsTo(models.User,
+        { foreignKey: "userId",
+          onDelete: "cascade"
         });
-        models.Gif.hasMany(models.Comment);
-    }
-  }
-  Gif.init({
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+		}
+	}
+	Gif.init(
+		{
+      userId: {
+      //foreignKey of gifs table
+      type: DataTypes.UUID,
+      allowNull: false,
     },
     statusText: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         is: /^([\s\S]){2,255}([\s\.])/,
         len: [2, 255]
@@ -34,7 +40,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        is: /^([a-zA-Z]\:|\\\\[^\/\\:*?"<>|]+\\[^\/\\:*?"<>|]+)(\\[^\/\\:*?"<>|]+)+(\.[^\/\\:*?"<>|]+)$/,
         notEmpty: true
       }
     }
