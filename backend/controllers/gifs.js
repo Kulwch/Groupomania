@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../models/index.js');
 const getUserId = require("../utils/getUserId");
+const getUserIsAdmin = require('../utils/isUserAdmin');
 const Gif = require("../models/Gif");
 const fs = require('fs');
 
@@ -12,7 +13,7 @@ exports.getAllGifs = (req, res, next) => {
 
 
 exports.getOneGif = (req, res, next) => {
-    sequelize.Gif.findOne({ _id: req.params.id  })
+    sequelize.Gif.findOne({where: { id: req.params.id  }})
     .then((gif) => res.status(200).json(gif))
     .catch((error) => res.status(404).json({ error })
 )};
@@ -33,18 +34,27 @@ exports.modifyGif = (req, res, next) => {
             ...req.body.gif,
             imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...req.body };
-    sequelize.Gif.findOne({ _id: req.params.id })
-        .then(gif => gif.set({gif}, {...gifObject}))
+    sequelize.Gif.update({...gifObject}, {where: { id: req.params.id }})
         .then(() => res.status(200).json({ message: 'Gif modifié !' }))
         .catch(error => res.status(400).json({ error }));
 }
 
 exports.deleteGif = (req, res, next) => {
-    sequelize.Gif.findOne({ _id: req.params.id })
+    sequelize.Gif.destroy({where: { id: req.params.id }})
+        .then(() => res.status(200).json({ message: 'Gif supprimé !' }))
+        .catch(error => res.status(400).json({ error }));
+};
+
+exports.adminDeleteGif = (req, res, next) => {
+    const isAdmin = getUserIsAdmin(req);
+    if(!isAdmin){
+        return res.status(401).json({message: 'Vous n\'êtes pas autorisé à supprimer ce gif !'})
+    }
+     sequelize.Gif.findOne({where: { id: req.params.id }})
         .then(gif => {
             const filename = gif.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
-                gif.destroy(res)
+                gif.destroy()
                     .then(() => res.status(200).json({ message: 'Gif supprimé !' }))
                     .catch(error => res.status(400).json({ error }));
             });
@@ -52,9 +62,24 @@ exports.deleteGif = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 }
 
+exports.adminModifyGif = (req, res, next) => {
+    const isAdmin = getUserIsAdmin(req);
+    if(isAdmin){
+        return res.status(401).json({message: 'Vous n\'êtes pas autorisé à modifier ce gif !'})
+    }
+    const gifObject = req.file ?
+        {
+            ...req.body.gif,
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : { ...req.body };
+    sequelize.Gif.findOne({where: { id: req.params.id }})
+        .then(gif => gif.set({gif}, {...gifObject}))
+        .then(() => res.status(200).json({ message: 'Gif modifié !' }))
+        .catch(error => res.status(400).json({ error }));
+}
 
 exports.rateOneGif = (req, res, next) => {
-   sequelize.Gif.findOne({ _id: req.params.id }).then((gif) => {
+   sequelize.Gif.findOne({where: { id: req.params.id }}).then((gif) => {
 
         switch (req.body.like) {
             case 0:                

@@ -2,13 +2,15 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const sequelize = require('../models/index.js');
-const getUserId = require("../utils/getUserId");
+const getUserIsAdmin = require("../utils/isUserAdmin");
 const fs = require('fs');
-const User = require('../models/User');
+const getUserId = require('../utils/getUserId');
 const dotenv = require('dotenv').config();
 
 exports.signup = (req, res, next) => {
-    
+    if(!req.body.password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)){
+        return res.status(400).json({ error : "le mot de passe n'est pas assez fort. Rappel: 8 lettres minimum, 1 chiffre minimum, 1 lettre majuscule minimum, 1 caractères spécial minimum"})
+    }
      bcrypt.hash(req.body.password, 10)
     .then(hash => {
         sequelize.User.create({ 
@@ -37,7 +39,10 @@ exports.login = (req, res, next) => {
                 res.status(200).json({
                     userId: user.id,
                     token: jwt.sign(
-                        { userId: user.id },
+                        { 
+                            userId: user.id,
+                            isAdmin : user.isAdmin
+                        },
                         process.env.TOKEN_KEY,
                         { expiresIn: '24h' }
                     )
@@ -49,32 +54,56 @@ exports.login = (req, res, next) => {
 };
 
 exports.getProfile = (req, res, next) => {
-    sequelize.User.findOne({attributes: ['id', 'firstName', 'lastName', 'email'], where: {_id: req.user.id}})
+    sequelize.User.findOne({attributes: ['firstName', 'lastName', 'email', 'isAdmin'], where: {id: req.params.id}})
         .then(user => res.status(200).json({user}))
         .catch(error => res.status(404).json({error}))
 };
 
-exports.updateProfile = (req, res, next) => {
+exports.getAllProfiles = (req, res, next) => {
+    sequelize.User.findAll({attributes: ['firstName', 'lastName', 'email', 'isAdmin']})
+        .then(users => res.status(200).json({users}))
+        .catch(error => res.status(404).json({error}))
+};
+
+exports.updateAvatarProfile = (req, res, next) => {
     const userObject = req.file ?
         {
             ...req.body.user,
             avatarUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
         } : { ...req.body };
-    sequelize.User.findOne({_id: req.params.id}).then(user => 
-        user.set({user}, {...userObject}))
+        sequelize.User.update({...userObject}, {where: {id: req.params.id}})
             .then(() => res.status(200).json({message: "Profil modifié !"}))
             .catch(error => res.status(401).json({message: 'Modification non autorisée !'}))
-    .catch(error => res.status(400).json({error}))
 };
 
 exports.deleteProfile = (req, res, next) => {
-    sequelize.User.findOne({_id: req.params.id}).then(user => {
-        const filename = user.avatarUrl.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => { 
-            user.destroy()
-                .then(() => res.status(200).json({message: 'Profil supprimé !'}))
-                .catch(error => res.status(401).json({message: 'Vous n\'êtes pas autorisé à supprimer ce profil !'}))
-        })
-    })
-    .catch(error => res.status(400).json({error}))
+    const userId = getUserId(req);
+    sequelize.User.destroy({where: {id: userId}})
+        .then(() => res.status(200).json({message: 'Profil supprimé !'}))
+        .catch(error => res.status(401).json({message: 'Vous n\'êtes pas autorisé à supprimer ce profil !'}))
+};
+
+exports.adminDeleteProfile = (req, res, next) => {
+    const isAdmin = getUserIsAdmin(req);
+    if(!isAdmin){
+        return res.status(401).json({message: 'Vous n\'êtes pas autorisé à supprimer ce profil !'})
+    }
+    sequelize.User.destroy({where: {id: req.params.id}})
+        .then(() => res.status(200).json({message: 'Profil supprimé !'}))
+        .catch(error => res.status(401).json({message: 'Erreur de requête de suppression'}))
+};
+
+exports.adminUpdateProfile = (req, res, next) => {
+    const isAdmin = getUserIsAdmin(req);
+    if(isAdmin !== true){
+        return res.status(401).json({message: 'Vous n\'êtes pas autorisé à modifier ce profil !'})
+    }
+    const userObject = req.file ?
+        {
+            ...req.body.user,
+            avatarUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : { ...req.body };
+        sequelize.User.update({...userObject}, {where: {id: req.params.id}})
+            .then(() => res.status(200).json({message: "Profil modifié !"}))
+            .catch(error => res.status(401).json({message: 'Modification impossible !'}))
 };

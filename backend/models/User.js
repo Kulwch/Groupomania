@@ -45,7 +45,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      }
+    },
+    avatarUrl: {
+      type: DataTypes.STRING
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
