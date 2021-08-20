@@ -1,22 +1,9 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      models.User.hasMany(models.Gif);
-      models.User.hasMany(models.Comment);
-    }
-  }
-  User.init({
+module.exports = (sequelize, Sequelize) => {
+	const User = sequelize.define("User",
+  {
     firstName: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       validate: {
         is: /^[a-z]+$/i,
@@ -25,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     lastName: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       validate: {
         is: /^[a-z]+$/i,
@@ -34,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     email: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       unique: true,
       validate: {
@@ -44,17 +31,17 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     password: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
       }
     },
     avatarUrl: {
-      type: DataTypes.STRING
+      type: Sequelize.STRING
     },
     isAdmin: {
-      type: DataTypes.BOOLEAN,
+      type: Sequelize.BOOLEAN,
       defaultValue: false
     }
   }, {
