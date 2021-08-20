@@ -5,14 +5,14 @@ const User = require('../models/User');
 const Comment = require("../models/Comment");
 
 exports.getAllComments = (req, res, next) => {
-    sequelize.Comment.findAll()
+    sequelize.Comment.findAll({where: {gifId: req.params.id}})
         .then((comments) => res.status(200).json(comments))
         .catch(error => res.status(400).json({error}))
 }
 
 exports.postComment = (req, res, next) => {    
         sequelize.Comment.create({
-            gifId: req.body.gifId,
+            gifId: req.params.id,
             userId: getUserId(req),
             content: req.body.content
         })

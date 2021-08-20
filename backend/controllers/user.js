@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const sequelize = require('../models/index.js');
-const getUserIsAdmin = require("../utils/isUserAdmin");
 const fs = require('fs');
 const getUserId = require('../utils/getUserId');
 const dotenv = require('dotenv').config();
@@ -44,7 +43,7 @@ exports.login = (req, res, next) => {
                             isAdmin : user.isAdmin
                         },
                         process.env.TOKEN_KEY,
-                        { expiresIn: '24h' }
+                        { expiresIn: '2h' }
                     )
                 });                
             })
@@ -77,27 +76,18 @@ exports.updateAvatarProfile = (req, res, next) => {
 };
 
 exports.deleteProfile = (req, res, next) => {
-    const userId = getUserId(req);
-    sequelize.User.destroy({where: {id: userId}})
+    sequelize.User.destroy({where: {id: req.params.id}})
         .then(() => res.status(200).json({message: 'Profil supprimé !'}))
         .catch(error => res.status(401).json({message: 'Vous n\'êtes pas autorisé à supprimer ce profil !'}))
 };
 
 exports.adminDeleteProfile = (req, res, next) => {
-    const isAdmin = getUserIsAdmin(req);
-    if(!isAdmin){
-        return res.status(401).json({message: 'Vous n\'êtes pas autorisé à supprimer ce profil !'})
-    }
     sequelize.User.destroy({where: {id: req.params.id}})
         .then(() => res.status(200).json({message: 'Profil supprimé !'}))
         .catch(error => res.status(401).json({message: 'Erreur de requête de suppression'}))
 };
 
 exports.adminUpdateProfile = (req, res, next) => {
-    const isAdmin = getUserIsAdmin(req);
-    if(isAdmin !== true){
-        return res.status(401).json({message: 'Vous n\'êtes pas autorisé à modifier ce profil !'})
-    }
     const userObject = req.file ?
         {
             ...req.body.user,

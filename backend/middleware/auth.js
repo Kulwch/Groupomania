@@ -6,17 +6,22 @@
  * 
  */
 
-const getUserIdFromToken = require("../utils/getUserId");
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv').config();
 
 module.exports = (req, res, next) => {
-  const userId = req.body.userId;
-  const authorization = req.headers.authorization;
-  
   try {
-    if (!authorization) throw new Error("Pas d'utilisateur enregistré");
-    if (userId && userId !== getUserIdFromToken(req)) throw new Error("userId non valide");
-    next();
-  } catch (err) {
-    res.status(401).json({message: 'Requête non valide !'});
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
+    const userId = decodedToken.userId;
+    if (req.body.userId !== userId) {
+      throw 'userId non valide';
+    } else {
+      next();
+    }
+  } catch {
+    res.status(401).json({
+      error: new Error('Requête non valide !')
+    });
   }
 };

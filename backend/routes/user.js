@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('../middleware/auth');
+const adminAuth = require('../middleware/adminAuth');
 const connectLimiter = require('../middleware/connectLimiter');
 const multer = require('../middleware/multer-config');
 
@@ -14,6 +15,6 @@ router.delete('/:id', auth, multer, userCtrl.deleteProfile);
 router.get('/:id', auth, userCtrl.getProfile);
 router.get('/', auth, userCtrl.getAllProfiles);
 
-router.delete('/:id', auth, multer, userCtrl.adminDeleteProfile);
-router.put('/:id', auth, multer, userCtrl.adminUpdateProfile);
+router.delete('/:id', adminAuth, multer, userCtrl.adminDeleteProfile);
+router.put('/:id', adminAuth, multer, userCtrl.adminUpdateProfile);
 module.exports = router;
