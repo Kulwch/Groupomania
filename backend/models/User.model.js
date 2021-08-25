@@ -43,6 +43,10 @@ module.exports = (sequelize, Sequelize) => {
     isAdmin: {
       type: Sequelize.BOOLEAN,
       defaultValue: false
+    },
+    isModerator: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false
     }
   }, {
     sequelize,

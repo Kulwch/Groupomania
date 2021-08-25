@@ -19,11 +19,15 @@ module.exports = (sequelize, Sequelize) => {
     },
     likes: {
       type: Sequelize.INTEGER,
-      defaultValue: 0
+      notNull: true,
+      unsigned: true,
+			default: 0
     },
     dislikes: {
       type: Sequelize.INTEGER,
-      defaultValue: 0
+      notNull: true,
+      unsigned: true,
+			default: 0
     }
   }, {
     sequelize,

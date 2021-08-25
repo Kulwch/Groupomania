@@ -19,11 +19,14 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
+
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/auth', userRoutes);
 app.use('/api/gifs', gifRoutes);
 app.use('/api/comments', commentRoutes);
+
+
 
 module.exports = app;

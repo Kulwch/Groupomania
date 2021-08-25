@@ -63,7 +63,7 @@ exports.getAllProfiles = (req, res, next) => {
         .catch(error => res.status(404).json({error}))
 };
 
-exports.updateAvatarProfile = (req, res, next) => {
+exports.updateProfile = (req, res, next) => {
     const userObject = req.file ?
         {
             ...req.body.user,
