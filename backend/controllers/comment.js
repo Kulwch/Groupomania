@@ -1,31 +1,37 @@
-const {
-  Sequelize,
-  DataTypes,
-  Model
-} = require('sequelize');
-const sequelize = require('../models/index.js');
-const User = require('../models/User');
-const Comment = require("../models/Comment");
+const db = require('../models/index.model');
+const getUserId = require("../utils/getUserId");
 
 exports.getAllComments = (req, res, next) => {
-    sequelize.Comment.findAll()
+    db.Comment.findAll({where: {gifId: req.params.id}})
         .then((comments) => res.status(200).json(comments))
         .catch(error => res.status(400).json({error}))
 }
 
 exports.postComment = (req, res, next) => {    
-        sequelize.Comment.create({
-            gifId: req.params.id,
-            userId: req.body.userId,
-            content: req.body.content
-        })
-        .then(() => res.status(201).json({ message: 'commentaire publié !'}))
-        .catch(error => res.status(400).json({ error }))   
+    db.Comment.create({
+        gifId: req.params.id,
+        userId: getUserId(req),
+        content: req.body.content
+    })
+    .then(() => res.status(201).json({ message: 'commentaire publié !'}))
+    .catch(error => res.status(400).json({ error }))   
 };
 
-exports.deleteComment = (req, res, next) => {    
-    sequelize.Comment.findOne({_id: req.params.id})
-        .then(comment => comment.destroy())
-        .then(() => res.status(200).json({ message: 'commentaire effacé !'}))
-        .catch(error => res.status(400).json({error}))
-}
+exports.deleteComment = (req, res, next) => {   
+    db.Comment.findOne({where: { id: req.params.id}})
+        .then(comment => {
+            if(comment.userId !== getUserId(req)){
+                return res.status(401).json({message: 'Requête non autorisée !'})
+            };
+    comment.destroy()
+            .then(() => res.status(200).json({ message: 'commentaire effacé !'}))
+            .catch(error => res.status(400).json({error}))
+    });
+};
+
+exports.adminOrModeratorDeleteComment = (req, res, next) => { 
+    db.Comment.destroy({where: { id: req.params.id }})
+            .then(() => res.status(200).json({ message: 'commentaire effacé !'}))
+            .catch(error => res.status(400).json({error}))
+    .catch(error => res.status(404).json({error}))
+};
