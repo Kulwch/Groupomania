@@ -1,20 +1,37 @@
 <template>
-    <figure v-for="gif in gifs" :key="gif.id">
-        <figcaption>{{ gif.statusText }}</figcaption>
-        <img :src="gif.url" :alt="gif.title + 'publié par' +gif.completeName" />
-    </figure>
+    <div class="col mx-auto border border-dark rounded shadow mt-3">
+        <figure>
+            <figcaption>{{statusText}}</figcaption>
+            <img :src="imageUrl" alt="publié par" />
+        </figure>
+        <comments></comments>
+    </div>
+    
 </template>
 
 
-<script setup>
-const gifs = defineProps(['gifs']);
+<script>
+import comments from '../components/comments.ce.vue'
 
-const axios = require('axios').default;
-
-axios
-  .get('https://catfact.ninja/docs')
-  .then(res => {gifs = res})
-
+export default {
+    name:'gif',
+    components: {
+        comments
+    },
+    
+    props:{
+        imageUrl: {
+            type:String, 
+            required:true,
+            
+        },
+        statusText: {
+            type:String,
+            required:true,
+        },
+        
+    },
+}
 </script>
 
 <style>

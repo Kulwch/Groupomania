@@ -1,20 +1,17 @@
 <template>
-  <h1>Groupomania</h1>
-  <img alt="Groupomania logo" src="./assets/logo.png" />
-  <router-view></router-view>
+  <img alt="Groupomania logo" src="./assets/icon-above-font.png" />
+  <div class="container">
+    <router-view />
+  </div>
+  
 </template>
 
-<script setup>
+<script>
 
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

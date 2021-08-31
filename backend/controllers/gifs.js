@@ -3,7 +3,7 @@ const getUserId = require("../utils/getUserId");
 const fs = require('fs');
 
 exports.getAllGifs = (req, res, next) => {
-    db.Gif.findAll({ where: { userId: req.params.id } })
+    db.Gif.findAll()
         .then((gifs) => res.status(200).json(gifs))
         .catch(error => res.status(400).json({ error })
         )

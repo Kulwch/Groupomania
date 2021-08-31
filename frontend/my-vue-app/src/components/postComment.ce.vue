@@ -12,7 +12,7 @@
                             <label for="statusText" class="form-label">Commentaire :</label>
                             <input type="comment" class="form-control" id="comment">
                         </div>                
-                        <button type="submit" class="btn btn-primary">Publier le Gif</button>
+                        <button type="submit" class="btn btn-primary">Publier le commentaire</button>
                     </form>
                 </div>
             </div>
