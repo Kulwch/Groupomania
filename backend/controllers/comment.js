@@ -1,7 +1,7 @@
 const db = require('../models/index.model');
 const getUserId = require("../utils/getUserId");
 
-exports.getAllComments = (req, res, next) => {
+exports.getComments = (req, res, next) => {
     db.Comment.findAll({where: {gifId: req.params.id}})
         .then((comments) => res.status(200).json(comments))
         .catch(error => res.status(400).json({error}))
@@ -28,6 +28,12 @@ exports.deleteComment = (req, res, next) => {
             .catch(error => res.status(400).json({error}))
     });
 };
+
+exports.getAllComments = (req, res, next) => {
+    db.Comment.findAll({})
+        .then((comments) => res.status(200).json(comments))
+        .catch(error => res.status(400).json({error}))
+}
 
 exports.adminOrModeratorDeleteComment = (req, res, next) => { 
     db.Comment.destroy({where: { id: req.params.id }})

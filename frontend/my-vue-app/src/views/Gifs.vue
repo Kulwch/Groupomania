@@ -31,19 +31,19 @@ export default {
             user: {
                 avatarUrl: "",
                 id: "",
-                isAdmin: "",
-                isModerator: ""
+                isAdmin: Boolean,
+                isModerator: Boolean
             }
          }
     },
 
     created() {
         axios
-            .get('http://localhost:3001/api/gifs', {
-              headers: {
+            .get('http://localhost:3001/api/gifs',{                                
+                headers: {
                 "Content-Type": "multipart/form-data",
                 "Authorization": 'Bearer ' + this.token
-              }
+                }
             })
             .then(res => { this.gifs = res.data })
             .catch(err => {
@@ -51,22 +51,10 @@ export default {
               /*this.$router.push('/login');*/
               window.alert('Veuillez vous connecter pour accéder au site')
             });
-        
-        /*axios
-            .get('http://localhost:3001/api/comments', {
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": 'Bearer ' + this.token
-              }
-            })
-            .then((res) => {
-              this.comments = res.data;
-              console.log(res);
-            })
-            .catch(err => {
-              console.log(err + "User inconnu ou commentaires indisponibles");
-            })*/
+
     },
+
+    
     
 }
 </script>

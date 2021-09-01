@@ -1,4 +1,5 @@
 <template>
+  <navBar v-if="!userId === ''"></navBar>
   <img alt="Groupomania logo" src="./assets/icon-above-font.png" />
   <div class="container">
     <router-view />
@@ -7,7 +8,20 @@
 </template>
 
 <script>
+import navBar from './components/navBar.ce.vue'
 
+export default {
+  name:'App',
+  components: {
+    navBar
+  },
+
+  data() {
+    return {
+      userId: localStorage.getItem('userId')
+    }
+  }
+}
 </script>
 
 <style>

@@ -20,7 +20,39 @@
     </div>
 </template>
 <script>
-   
+   export default {
+        name: "postComment",
+
+        data() {
+            return {
+                gifId:"",
+                userId: localStorage.getItem('userId'),
+                content: "",                                
+                token: localStorage.getItem('token')
+            }
+
+        },
+
+        methods: {
+
+            postComment() {                
+                const formData = new FormData();
+                    formData.append("gifId"), parseInt(localStorage.getItem('gifId'))
+                    formData.append("userId", parseInt(localStorage.getItem('userId')))
+                    formData.append("content", document.getElementById('content').value)
+                
+                axios
+                    .post('http://localhost:3001/api/comments',
+                        formData, {
+                        headers: {
+                            "Content-Type": "multipart/form-data",
+                            "Authorization": 'Bearer ' + this.token
+                        }
+                    })
+                    
+            },
+        }
+    }
 
 </script>
 <style>

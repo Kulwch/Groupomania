@@ -11,13 +11,11 @@
 
 
 <script>
-import comments from '../components/comments.ce.vue'
+import comments from './comments.ce.vue'
 
 export default {
     name:'gif',
-    components: {
-        comments
-    },
+    components: comments,
     
     props:{
         imageUrl: {
