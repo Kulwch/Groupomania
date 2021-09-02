@@ -13,8 +13,6 @@
 import navBar from '../components/navBar.ce.vue'
 import gif from '../components/gif.ce.vue'
 import postGifForm from '../components/postGifForm.ce.vue'
-import axios from 'axios'
-
 export default {
     name: 'Gifs',
     components: {
@@ -23,11 +21,15 @@ export default {
         navBar,
     },
 
+     
+
+                
+
     data() {
         return {
             token: localStorage.getItem('token'),
             gifs: [],
-            comments: [],
+            comments: [{}],
             user: {
                 avatarUrl: "",
                 id: "",
@@ -37,25 +39,7 @@ export default {
          }
     },
 
-    created() {
-        axios
-            .get('http://localhost:3001/api/gifs',{                                
-                headers: {
-                "Content-Type": "multipart/form-data",
-                "Authorization": 'Bearer ' + this.token
-                }
-            })
-            .then(res => { this.gifs = res.data })
-            .catch(err => {
-              console.log(err + "User inconnu ou Posts indisponibles");
-              /*this.$router.push('/login');*/
-              window.alert('Veuillez vous connecter pour accéder au site')
-            });
-
-    },
-
-    
-    
+   
 }
 </script>
 

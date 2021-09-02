@@ -5,11 +5,11 @@
 
             <ul class="d-inline-flex justify-content-around w-50 list-unstyled">
                 <li><button>Profils</button></li>
-                <allProfiles></allProfiles>
+                <div class="col d-flex flex-column"><allProfiles></allProfiles></div>
                 <li><button>Publications</button></li>
-                <allGifs></allGifs>
+                <div class="col d-flex flex-column"><allGifs></allGifs></div>
                 <li><button>Commentaires</button></li>
-                <div><allComments></allComments></div>
+                <div class="col d-flex flex-column"><allComments></allComments></div>
                 <li><router-link to="/signoff">Déconnexion</router-link></li>
             </ul>           
 

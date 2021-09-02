@@ -21,6 +21,12 @@ export default {
         profileInfos,
         navBar,
     },
+
+    data() {
+        return {
+            profileInfos
+        }
+    }
 }
 </script>
 

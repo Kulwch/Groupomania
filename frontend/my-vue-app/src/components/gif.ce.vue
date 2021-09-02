@@ -1,8 +1,8 @@
 <template>
-    <div class="col mx-auto border border-dark rounded shadow mt-3">
+    <div class="col mx-auto border border-dark rounded shadow mt-3" v-bind="gifs">
         <figure>
-            <figcaption>{{ statusText }}</figcaption>
-            <img v-bind:src="imageUrl" alt="publié par" />
+            <figcaption>{{ gifs.statusText }}</figcaption>
+            <div class="w-25"><img v-bind:src="gifs.imageUrl" alt="publié par" /></div>
         </figure>
         <comment></comment>
         <span v-if="user.id === gif.userId || user.isAdmin === 'true'"><button>Supprimer le gif</button></span>
@@ -12,6 +12,7 @@
 
 
 <script>
+import axios from 'axios'
 import comment from '../components/comment.ce.vue'
 
 export default {
@@ -20,26 +21,27 @@ export default {
         comment
     },
    
-    props:{
-        imageUrl: {
-            type:String, 
-            required:true
-            
-        },
-        statusText: {
-            type:String,
-            required:true
-        },
-        id: {
-            type:Number,
-            required:true
-        }    
+
+    created() {
+        axios
+            .get('http://localhost:3001/api/gifs',{                                
+                headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": 'Bearer ' + this.token
+                }
+            })
+            .then(res => { this.gifs = res.data.gif })
+            .catch(err => {
+              console.log(err + "User inconnu ou Posts indisponibles");
+              /*this.$router.push('/login');*/
+              window.alert('Veuillez vous connecter pour accéder au site')
+            });
     },
 
     data() {
         return {
-            gif,
-            comment,
+            gifs:{},
             user:{
                 id: localStorage.getItem('userId'),
                 isAdmin: localStorage.getItem('isAdmin')
