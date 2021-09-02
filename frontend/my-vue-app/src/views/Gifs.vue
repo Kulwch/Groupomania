@@ -2,10 +2,10 @@
     <navBar></navBar>
     <div class="row d-flex flex-column">
         <postGifForm></postGifForm>
-        <gif v-for="gifLoop in gifs" 
-            :key="gifLoop" 
-            v-bind="gifLoop" 
-        ></gif>       
+        <gif v-for="gif in gifs" 
+            :key="gif" 
+            v-bind="gif" 
+        ></gif>
     </div>    
 </template>
 

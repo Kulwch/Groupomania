@@ -38,7 +38,7 @@ export default {
         signup() {
             this.errorAlert = false;
 
-            axios.post( 'http://localhost:3001/api/auth/signup', {
+            axios.post( 'http://localhost:3001/api/users/signup', {
                 firstName: document.getElementById('firstName').value,
                 lastName: document.getElementById('lastName').value,
                 email: document.getElementById('email').value,

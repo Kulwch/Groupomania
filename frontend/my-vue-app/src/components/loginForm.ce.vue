@@ -29,7 +29,7 @@ export default {
         login() {
             this.errorAlert = false;
 
-            axios.post( 'http://localhost:3001/api/auth/login', {
+            axios.post( 'http://localhost:3001/api/users/login', {
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value,
         })
@@ -37,7 +37,6 @@ export default {
             localStorage.setItem("token", res.data.token)
             localStorage.setItem("userId", res.data.userId)
             localStorage.setItem("isAdmin", res.data.isAdmin)
-            localStorage.setItem("isModerator", res.data.isModerator)
             this.$router.push('/gifs');
         })
         .catch(() => {

@@ -13,9 +13,5 @@
     import loginForm from '../components/loginForm.ce.vue'
 </script>
 
-<script>
-
-</script>
-
 <style>
 </style>

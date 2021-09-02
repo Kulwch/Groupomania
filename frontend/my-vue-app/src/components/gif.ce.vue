@@ -1,34 +1,52 @@
 <template>
     <div class="col mx-auto border border-dark rounded shadow mt-3">
         <figure>
-            <figcaption>{{statusText}}</figcaption>
-            <img :src="imageUrl" alt="publié par" />
+            <figcaption>{{ statusText }}</figcaption>
+            <img v-bind:src="imageUrl" alt="publié par" />
         </figure>
-        <comments></comments>
+        <comment></comment>
+        <span v-if="user.id === gif.userId || user.isAdmin === 'true'"><button>Supprimer le gif</button></span>
     </div>
     
 </template>
 
 
 <script>
-import comments from './comments.ce.vue'
+import comment from '../components/comment.ce.vue'
 
 export default {
     name:'gif',
-    components: comments,
-    
+    components: {
+        comment
+    },
+   
     props:{
         imageUrl: {
             type:String, 
-            required:true,
+            required:true
             
         },
         statusText: {
             type:String,
-            required:true,
+            required:true
         },
-        
+        id: {
+            type:Number,
+            required:true
+        }    
     },
+
+    data() {
+        return {
+            gif,
+            comment,
+            user:{
+                id: localStorage.getItem('userId'),
+                isAdmin: localStorage.getItem('isAdmin')
+            }
+        }
+    },
+
 }
 </script>
 

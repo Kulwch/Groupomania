@@ -20,32 +20,31 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-    props:{
-        firstName:{
-            type:String,
-            required:true
-        },
-        lastName:{
-            type:String,
-            required:true
-        },
-        email:{
-            type:String,
-            required:true
-        },
-        avatarUrl: {
-            type:String, 
-            required:true            
-        },
-        isAdmin:{
-            type:Boolean,
-            required: true
-        },
-        isModerator: {
-            type:Boolean,
-            required:true
-        }        
+    name:"profile",
+   
+    data() {
+        return {
+            userId: localStorage.getItem('userId'),
+            user:[{}],
+            firstName:"",
+            lastName:"",
+            email:"",
+            avatarUrl:"",
+            isAdmin:""            
+        }
+    },
+
+    created() {
+        axios.
+        get( `http://localhost:3001/api/users/${this.userId}`, 
+            {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Authorization": "Bearer " + this.token,
+            }})
+        .then((res) => { this.user = res.data })
     },
 }
 </script>

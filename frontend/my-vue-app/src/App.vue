@@ -1,5 +1,5 @@
 <template>
-  <navBar v-if="!userId === ''"></navBar>
+  <navBar v-if="userId"></navBar>
   <img alt="Groupomania logo" src="./assets/icon-above-font.png" />
   <div class="container">
     <router-view />
@@ -17,8 +17,8 @@ export default {
   },
 
   data() {
-    return {
-      userId: localStorage.getItem('userId')
+    return {      
+      
     }
   }
 }

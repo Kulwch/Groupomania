@@ -1,12 +1,6 @@
 const db = require('../models/index.model');
 const getUserId = require("../utils/getUserId");
 
-exports.getComments = (req, res, next) => {
-    db.Comment.findAll({where: {gifId: req.params.id}})
-        .then((comments) => res.status(200).json(comments))
-        .catch(error => res.status(400).json({error}))
-}
-
 exports.postComment = (req, res, next) => {    
     db.Comment.create({
         gifId: req.params.id,
@@ -30,12 +24,12 @@ exports.deleteComment = (req, res, next) => {
 };
 
 exports.getAllComments = (req, res, next) => {
-    db.Comment.findAll({})
+    db.Comment.findAll()
         .then((comments) => res.status(200).json(comments))
         .catch(error => res.status(400).json({error}))
-}
+};
 
-exports.adminOrModeratorDeleteComment = (req, res, next) => { 
+exports.adminDeleteComment = (req, res, next) => { 
     db.Comment.destroy({where: { id: req.params.id }})
             .then(() => res.status(200).json({ message: 'commentaire effacé !'}))
             .catch(error => res.status(400).json({error}))

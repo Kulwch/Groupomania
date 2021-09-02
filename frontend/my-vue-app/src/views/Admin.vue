@@ -1,24 +1,43 @@
 <template>
     <div class="row">
         <div class="col">
-            <h2>Panneau administrateur</h2>
-            
-            <latestsGifs></latestsGifs>
+            <h2>Administration</h2>
 
-            <latestsComments></latestsComments>
-
-            <latestsNewUsers></latestsNewUsers>
-
-            <router-link to="/allProfiles">Profils</router-link>
-            <router-link to="/allGifs">Publications</router-link>
-            <router-link to="/allComments">Commentaires</router-link>
-            <router-link to="/signoff">Déconnexion</router-link>
+            <ul class="d-inline-flex justify-content-around w-50 list-unstyled">
+                <li><button>Profils</button></li>
+                <allProfiles></allProfiles>
+                <li><button>Publications</button></li>
+                <allGifs></allGifs>
+                <li><button>Commentaires</button></li>
+                <div><allComments></allComments></div>
+                <li><router-link to="/signoff">Déconnexion</router-link></li>
+            </ul>           
 
         </div>
     </div>
 </template>
 
 <script>
+import allComments from '../components/allComments.ce.vue'
+import allProfiles from '../components/allProfiles.ce.vue'
+import allGifs from '../components/allGifs.ce.vue'
+
+export default {
+    components: {
+        allProfiles,
+        allComments,
+        allGifs
+    },
+
+    data() {
+        return {
+            allComments:[],
+            allProfiles:[],
+            allGifs:[]
+        }
+    }
+
+}
 
 </script>
 

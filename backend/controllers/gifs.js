@@ -59,7 +59,7 @@ exports.deleteGif = (req, res, next) => {
         });
 };
 
-exports.adminOrModeratorDeleteGif = (req, res, next) => {
+exports.adminDeleteGif = (req, res, next) => {
     db.Gif.findOne({ where: { id: req.params.id } })
         .then(gif => {
             const filename = gif.imageUrl.split('/gifs/')[1];
@@ -71,7 +71,7 @@ exports.adminOrModeratorDeleteGif = (req, res, next) => {
         });
 };
 
-exports.adminOrModeratorModifyGif = (req, res, next) => {
+exports.adminModifyGif = (req, res, next) => {
     const gifObject = req.file ?
         {
             ...req.body.gif,
