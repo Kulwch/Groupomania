@@ -13,9 +13,11 @@
 <script>
 import profileInfos from '../components/profileInfos.ce.vue'
 import navBar from '../components/navBar.ce.vue'
+import axios from 'axios'
 
 export default {
-    name: 'Profile',
+    name: 'profile',
+
     components: {
         profileInfos,
         navBar,
@@ -24,6 +26,7 @@ export default {
     data() {
         return {
 
+            token:localStorage.getItem('token')
         }
     },
 

@@ -16,12 +16,17 @@
                 </div>
             </form>
         </div>
+        <span><button v-bind="user" @click.prevent="deleteUser(user.id)">Supprimer votre compte</button></span>
 </template>
 
 <script>
 import axios from 'axios'
 export default {
     name:"profile",
+
+    props: {
+        user:{}
+    },
 
     created() {
         axios.
@@ -64,6 +69,18 @@ export default {
                 }
             })
             .then(() => this.$router.go())
+        },
+
+        deleteUser(id) {
+            axios
+            .delete(`http://localhost:3001/api/users/${id}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + this.token
+                }
+            })
+            .then(() => this.$router.push('/signoff'))
         }
     }
 

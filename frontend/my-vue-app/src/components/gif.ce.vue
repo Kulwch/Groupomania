@@ -53,7 +53,7 @@ export default {
             .delete(`http://localhost:3001/api/gifs/${id}`,
             {
                 headers: {
-                    'Content-Type': 'application/',
+                    'Content-Type': 'application/json',
                     "Authorization": "Bearer " + this.token
                 }
             })
