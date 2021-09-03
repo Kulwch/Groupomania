@@ -4,7 +4,7 @@ const fs = require('fs');
 
 exports.getAllGifs = (req, res, next) => {
     db.Gif.findAll()
-        .then((gifs) => res.status(200).json(gifs))
+        .then((gifs) => res.status(200).json({gifs}))
         .catch(error => res.status(400).json({ error })
         )
 };
@@ -12,7 +12,7 @@ exports.getAllGifs = (req, res, next) => {
 
 exports.getOneGif = (req, res, next) => {
     db.Gif.findOne({ where: { id: req.params.id } })
-        .then((gif) => res.status(200).json(gif))
+        .then((gif) => res.status(200).json({gif}))
         .catch((error) => res.status(404).json({ error })
         )
 };
@@ -51,7 +51,7 @@ exports.deleteGif = (req, res, next) => {
                 return res.status(401).json({ message: 'Requête non autorisée !' })
             };
             const filename = gif.imageUrl.split('/gifs/')[1];
-            fs.unlink(`images/${filename}`, () => {
+            fs.unlink(`gifs/${filename}`, () => {
                 gif.destroy({ where: { id: req.params.id } })
                     .then(() => res.status(200).json({ message: 'Gif supprimé !' }))
                     .catch(error => res.status(400).json({ error }))
@@ -63,7 +63,7 @@ exports.adminDeleteGif = (req, res, next) => {
     db.Gif.findOne({ where: { id: req.params.id } })
         .then(gif => {
             const filename = gif.imageUrl.split('/gifs/')[1];
-            fs.unlink(`images/${filename}`, () => {
+            fs.unlink(`gifs/${filename}`, () => {
                 gif.destroy({ where: { id: req.params.id } })
                     .then(() => res.status(200).json({ message: 'Gif supprimé !' }))
                     .catch(error => res.status(400).json({ error }))

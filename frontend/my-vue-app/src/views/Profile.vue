@@ -14,7 +14,6 @@
 import profileInfos from '../components/profileInfos.ce.vue'
 import navBar from '../components/navBar.ce.vue'
 
-
 export default {
     name: 'Profile',
     components: {
@@ -24,9 +23,11 @@ export default {
 
     data() {
         return {
-            profileInfos
+
         }
-    }
+    },
+
+    
 }
 </script>
 

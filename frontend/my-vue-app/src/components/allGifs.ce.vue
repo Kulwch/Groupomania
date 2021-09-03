@@ -46,13 +46,13 @@ import axios from "axios"
                         "Authorization": 'Bearer ' + this.token
                     }
             })
-            .then(res => {this.allGifs = res.data})
+            .then(res => {this.allGifs = res.data.allGifs})
         },
 
         methods: {
             deleteGif(id) {
                 axios.
-                delete(`http://localhost:3001/gifs/${id}/admin`,
+                delete(`http://localhost:3001/gifs/${this.gif.id}/admin`,
                 {
                     headers:{
                         "Content-Type": "multipart/form-data",

@@ -1,37 +1,31 @@
 <template>
-    <div class="col mx-auto border border-dark rounded shadow mt-3" v-bind="gifs">
+    <div class="col mx-auto border border-dark rounded shadow mt-3" v-for="gif in gifs" :key="gif.id">
         <figure>
-            <figcaption>{{ gifs.statusText }}</figcaption>
-            <div class="w-25"><img v-bind:src="gifs.imageUrl" alt="publié par" /></div>
+            <figcaption>{{ gif.statusText }}</figcaption>
+            <img :src="gif.imageUrl" alt="image" />
         </figure>
-        <comment></comment>
-        <span v-if="user.id === gif.userId || user.isAdmin === 'true'"><button>Supprimer le gif</button></span>
+        <span v-if="userId == gif.userId"><button v-bind="gif" @click.prevent="deleteGif(gif.id)">Supprimer le gif</button></span>
     </div>
-    
 </template>
-
 
 <script>
 import axios from 'axios'
-import comment from '../components/comment.ce.vue'
 
 export default {
     name:'gif',
-    components: {
-        comment
-    },
-   
 
     created() {
         axios
-            .get('http://localhost:3001/api/gifs',{                                
+            .get('http://localhost:3001/api/gifs',
+            {                                
                 headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": 'Bearer ' + this.token
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": 'Bearer ' + this.token
                 }
             })
-            .then(res => { this.gifs = res.data.gif })
+            .then(res => { this.gifs = res.data.gifs })
+            .then(() => console.log(this.gifs))
             .catch(err => {
               console.log(err + "User inconnu ou Posts indisponibles");
               /*this.$router.push('/login');*/
@@ -41,14 +35,31 @@ export default {
 
     data() {
         return {
-            gifs:{},
+            gifs:[{}],
+            imageUrl:'',
+            userId: localStorage.getItem('userId'),
             user:{
                 id: localStorage.getItem('userId'),
                 isAdmin: localStorage.getItem('isAdmin')
-            }
+            },
+            token: localStorage.getItem('token') 
         }
     },
 
+    methods: {
+        
+        deleteGif(id) {
+            axios
+            .delete(`http://localhost:3001/api/gifs/${id}`,
+            {
+                headers: {
+                    'Content-Type': 'application/',
+                    "Authorization": "Bearer " + this.token
+                }
+            })
+            .then(() => this.$router.go())
+        }
+    }
 }
 </script>
 

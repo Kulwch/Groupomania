@@ -9,7 +9,7 @@
                 <li><button>Publications</button></li>
                 <div class="col d-flex flex-column"><allGifs></allGifs></div>
                 <li><button>Commentaires</button></li>
-                <div class="col d-flex flex-column"><allComments></allComments></div>
+                <div><allComments></allComments></div>
                 <li><router-link to="/signoff">Déconnexion</router-link></li>
             </ul>           
 

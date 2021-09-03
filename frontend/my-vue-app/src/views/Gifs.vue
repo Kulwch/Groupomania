@@ -2,10 +2,7 @@
     <navBar></navBar>
     <div class="row d-flex flex-column">
         <postGifForm></postGifForm>
-        <gif v-for="gif in gifs" 
-            :key="gif" 
-            v-bind="gif" 
-        ></gif>
+        <gif></gif>
     </div>    
 </template>
 
@@ -19,27 +16,14 @@ export default {
         postGifForm,
         gif,
         navBar,
-    },
-
-     
-
-                
+    },                   
 
     data() {
         return {
-            token: localStorage.getItem('token'),
-            gifs: [],
-            comments: [{}],
-            user: {
-                avatarUrl: "",
-                id: "",
-                isAdmin: Boolean,
-                isModerator: Boolean
-            }
-         }
-    },
-
-   
+          
+            
+        }
+    },   
 }
 </script>
 

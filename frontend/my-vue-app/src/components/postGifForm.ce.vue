@@ -51,6 +51,7 @@ import axios from 'axios'
                             "Authorization": 'Bearer ' + this.token
                         }
                     })
+                    .then(() => this.$router.go())
                     
             },
         }
