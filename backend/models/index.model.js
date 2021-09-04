@@ -88,6 +88,6 @@ try {
   console.error('Unable to connect to the database:', error);
 }
 
-sequelize.sync({alter: true});
+sequelize.sync({});
 
 module.exports = db;

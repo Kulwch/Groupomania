@@ -21,7 +21,7 @@ exports.createGif = (req, res, next) => {
     db.Gif.create({
         userId: getUserId(req),
         statusText: req.body.statusText,
-        imageUrl: `${req.protocol}://${req.get('host')}/gifs/${req.file.filename}`,
+        imageUrl: `${req.protocol}://${req.get('host')}/../gifs/${req.file.filename}`,
     })
         .then(() => res.status(201).json({ message: 'gif publié !' }))
         .catch((error) => res.status(400).json({ error }))
@@ -69,17 +69,6 @@ exports.adminDeleteGif = (req, res, next) => {
                     .catch(error => res.status(400).json({ error }))
             })
         });
-};
-
-exports.adminModifyGif = (req, res, next) => {
-    const gifObject = req.file ?
-        {
-            ...req.body.gif,
-            imageUrl: `${req.protocol}://${req.get('host')}/gifs/${req.file.filename}`
-        } : { ...req.body };
-    db.Gif.update({ ...gifObject }, { where: { id: req.params.id } })
-        .then(() => res.status(200).json({ message: 'Gif modifié !' }))
-        .catch(error => res.status(400).json({ error }));
 };
 
 

@@ -1,20 +1,32 @@
 <template>
     <div class="col mx-auto border border-dark rounded shadow mt-3" v-for="gif in gifs" :key="gif.id">
-        <figure>
-            <figcaption>{{ gif.statusText }}</figcaption>
-            <img :src="gif.imageUrl" alt="image" />
+        <figure class="mw-75">
+            <figcaption class="h4 text-danger">{{ gif.statusText }}</figcaption>
+            <img class="mw-75" :src="gif.imageUrl" alt="image" />
         </figure>
-        <span v-if="userId == gif.userId"><button v-bind="gif" @click.prevent="deleteGif(gif.id)">Supprimer le gif</button></span>
+        <span v-if="userId == gif.userId"><button class="mb-3 btn btn-secondary rounded" v-bind="gif" @click.prevent="deleteGif(gif.id)">Supprimer le gif</button></span>
+        <div v-if="comments">
+            <div v-for="(comment) in comments.filter((comment) => {return comment.gifId == gif.id})" :key="comment.id" class="bg-light rounded">
+                <p class="mb-2">{{ comment.content }}</p>
+                <span v-if="userId == comment.userId"><button class="mb-3 btn btn-secondary rounded" @click.prevent="deleteComment(comment.id)">Effacer le commentaire</button></span>    
+            </div>  
+        </div>        
+        <postComment v-bind="gif"></postComment>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import postComment from '../components/postComment.ce.vue'
 
 export default {
     name:'gif',
 
-    created() {
+    components: {
+        postComment
+    },
+
+     created() {
         axios
             .get('http://localhost:3001/api/gifs',
             {                                
@@ -25,18 +37,33 @@ export default {
                 }
             })
             .then(res => { this.gifs = res.data.gifs })
-            .then(() => console.log(this.gifs))
             .catch(err => {
-              console.log(err + "User inconnu ou Posts indisponibles");
-              /*this.$router.push('/login');*/
-              window.alert('Veuillez vous connecter pour accéder au site')
+              console.log(err + "Utilisateur inconnu ou Posts indisponibles");
+            }); 
+            
+         axios
+            .get('http://localhost:3001/api/comments',
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": 'Bearer ' + this.token
+                    }
+                })
+            .then(res => { this.comments = res.data})
+            .catch(err => {
+              console.log(err + "Utilisateur inconnu ou commentaires indisponibles");
             });
+           
     },
 
     data() {
         return {
-            gifs:[{}],
-            imageUrl:'',
+            gifs:[],
+            gif:{},
+            comments:[],
+            comment:{},
+            content:{},
             userId: localStorage.getItem('userId'),
             user:{
                 id: localStorage.getItem('userId'),
@@ -44,7 +71,7 @@ export default {
             },
             token: localStorage.getItem('token') 
         }
-    },
+    },   
 
     methods: {
         
@@ -58,11 +85,24 @@ export default {
                 }
             })
             .then(() => this.$router.go())
+        },
+
+        deleteComment(id) {
+            axios
+            .delete(`http://localhost:3001/api/comments/${id}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + this.token
+                }
+            })
+            .then(() => this.$router.go())
         }
+
     }
 }
 </script>
-
+    
 <style>
 
 </style>

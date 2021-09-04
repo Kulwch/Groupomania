@@ -6,11 +6,11 @@ const adminAuth = require('../middleware/adminAuth');
 
 const commentsCtrl = require('../controllers/comments');
 
-router.post('/', auth, commentsCtrl.postComment);
+router.post('/', commentsCtrl.postComment);
 router.delete('/:id', auth, commentsCtrl.deleteComment);
 router.get('/', auth, commentsCtrl.getAllComments);
 
-router.delete('/:id/admin', adminAuth, commentsCtrl.adminDeleteComment);
+router.delete('/admin/:id', adminAuth, commentsCtrl.adminDeleteComment);
 
 module.exports = router;
 

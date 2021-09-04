@@ -1,46 +1,45 @@
 <template>
-    <div class="col col-md-6 mx-auto border border-dark rounded shadow">
-        <h3 class="h4">Commenter ce gif</h3>                
-            <form  id="form" class="mt-5" @submit.prevent="postComment(gif.id)">
-                <div class="mx-auto w-50 mb-3">
-                    <label for="statusText" class="form-label">Commentaire :</label>
-                    <input type="text" class="form-control" id="content" name="content" ref="content">
+    <div v-bind="$attrs" class="col col-md-8 mx-auto mt-2 mb-2 border border-dark rounded shadow bg-light">
+        <h3 class="h5">Commenter ce gif</h3>                
+            <form class="mt-3">
+                <div class="mx-auto w-75 h-50  mb-3">
+                    <label for="content" class="form-label">Commentaire :</label>
+                    <textarea v-bind="$attrs" class="form-control content" name="content" ref="content" placeholder="Tapez ici votre commentaire !"></textarea>
                 </div>                
-                <button type="submit" class="btn btn-primary" @click="postComment(gif.id)">Publier le commentaire</button>
+                <button v-bind="$attrs" type="submit" class="btn btn-primary mb-3" @click="postComment($attrs)" ref="comment">Publier</button>
         </form>
     </div>
 </template>
 <script>
+import axios from "axios"
    export default {
         name: "postComment",
 
         data() {
             return {
-                gif,
+                gif:{},
+                userId: localStorage.getItem('userId'),                            
+                token: localStorage.getItem('token'),
                 gifId:"",
-                userId: localStorage.getItem('userId'),
-                content: "",                                
-                token: localStorage.getItem('token')
+                content:""
             }
 
         },
 
         methods: {
 
-            postComment(id) {                
-                const formData = new FormData();
-                    formData.append("gifId", gif.id)
-                    formData.append("userId", parseInt(localStorage.getItem('userId')))
-                    formData.append("content", document.getElementById('content').value)
-                
+        postComment($attrs) {                           
                 axios
-                    .post('http://localhost:3001/api/comments',
-                        formData, {
+                    .post('http://localhost:3001/api/comments', {
+                        gifId: this.$refs.comment.id,
+                        userId: localStorage.getItem('userId'),
+                        content: this.$refs.content.value,
                         headers: {
-                            "Content-Type": "multipart/form-data",
+                            "Content-Type": "application/json",
                             "Authorization": 'Bearer ' + this.token
                         }
                     })
+                    .then(() => this.$router.go())
                     
             },
         }

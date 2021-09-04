@@ -11,6 +11,8 @@ const getUserIdFromToken = require("../utils/getUserId");
 module.exports = (req, res, next) => {
   const userId = req.body.userId;
   const authorization = req.headers.authorization;
+
+  console.log(req.body.userId)
   
   try {
     if (!authorization) throw new Error("Pas d'utilisateur enregistré");

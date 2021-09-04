@@ -1,8 +1,8 @@
 <template>
     <div class="col">
-        <div v-for="comment in allComments" :key="comment.id" v-bind="comment">
+        <div v-for="comment in comments" :key="comment.id" v-bind="comment">
             <p>{{comment.content}}</p>
-            <button @click="deleteComment(comment.id)">Supprimer le commentaire</button>
+            <button @click.prevent="adminDeleteComment(comment.id)">Supprimer</button>
         </div>
     </div>
 </template>
@@ -22,11 +22,12 @@ import axios from "axios"
         data() {
             return {
                 token: localStorage.getItem('token'),
-                allComments:[],
                 user: {
                     id:localStorage.getItem('userId'),
                     isAdmin:localStorage.getItem('isAdmin'),
-                }
+                },
+                comments:[]
+
             }
         },
 
@@ -38,20 +39,21 @@ import axios from "axios"
                     "Authorization": 'Bearer ' + this.token
                 }
             })
-            .then(res => { this.allComments = res.data })
+            .then(res => { this.comments = res.data })
         },
 
         methods: {
-            deleteComment(id) {
-                axios.delete( `http://localhost:3001/api/comments/${id}/admin`,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        "Authorization": 'Bearer ' + this.token
-                    }
-                })
-                .then(() => console.log('Commentaire effacé !'))
-            }
+            adminDeleteComment(id) {
+            axios
+            .delete(`http://localhost:3001/api/comments/admin/${id}`,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + this.token
+                }
+            })
+            .then(() => this.$router.go())
+        }
         }
     }
 </script>

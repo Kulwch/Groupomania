@@ -13,10 +13,8 @@ router.delete('/:id', auth, multerGifs, gifCtrl.deleteGif);
 router.get('/:id', auth, gifCtrl.getOneGif);
 router.get('/', auth, gifCtrl.getAllGifs);
 
-// router.put('/:id/like', auth, gifCtrl.rateOneGif);
-
-router.put('/:id/admin', adminAuth, multerGifs, gifCtrl.adminModifyGif);
-router.delete('/:id/admin', adminAuth, multerGifs, gifCtrl.adminDeleteGif);
+router.put('/admin/:id', adminAuth, multerGifs, gifCtrl.modifyGif);
+router.delete('/admin/:id', adminAuth, multerGifs, gifCtrl.adminDeleteGif);
 
 module.exports = router;
 

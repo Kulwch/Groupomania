@@ -14,9 +14,9 @@ const routes =[
     component: () => import('../views/Signup.vue')
   },
   {
-    path: '/signoff',
-    name: 'Signoff',
-    component: () => import('../views/Signoff.vue')
+    path: '/logout',
+    name: 'Logout',
+    component: () => import('../views/Logout.vue')
   },
   {
     path: '/profile',
@@ -27,11 +27,6 @@ const routes =[
       path: '/gifs',
       name: 'Gifs',
       component: () => import('../views/Gifs.vue'),
-      props:true,
-        meta: {
-            title: 'Gifs',
-            requiresAuth: true,
-        },
   },
   {
     path: '/admin/',

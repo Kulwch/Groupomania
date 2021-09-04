@@ -4,13 +4,13 @@
         <form id="form" class="mt-5" @submit.prevent="postGif()" enctype="multipart/form-data">
             <div class="mx-auto w-50 mb-3">
                 <label for="statusText" class="form-label">Statut :</label>
-                <input type="statusText" class="form-control" id="statusText">
+                <input type="statusText" class="form-control" id="statusText" placeholder="Exemple: Quand on fait ceci..." >
             </div>
             <div class="w-50 mx-auto mb-3">
                 <label for="gif" class="form-label">Gif : </label>
                 <input type="file" class="form-control-file mx-auto" id="gif" name="gif" ref="gif" v-on:change="handleFileUpload()">                        
             </div>                    
-            <button type="submit" class="btn btn-primary mb-3" @click.prevent="postGif">Publier le Gif</button>
+            <button type="submit" class="btn btn-primary mb-3" @click.prevent="postGif">Publier</button>
         </form>
     </div>       
 </template>
@@ -55,8 +55,7 @@ import axios from 'axios'
                     
             },
         }
-    }
-    
+    }    
 </script>
 <style>
 	
