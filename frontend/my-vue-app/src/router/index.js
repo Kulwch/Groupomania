@@ -29,6 +29,11 @@ const routes =[
       component: () => import('../views/Gifs.vue'),
   },
   {
+    path: '/allComments',
+      name: 'AllComments',
+      component: () => import('../views/Comments.vue'),
+  },
+  {
     path: '/admin/',
     name: 'Admin',
     component: () => import('../views/Admin.vue')

@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column align-items-start col-8 mx-auto border border-dark rounded shadow bg-white" v-bind="$attrs">
+    <div class="d-flex flex-column align-items-start col-8 mx-auto border border-dark rounded shadow bg-white" v-bind="$attrs">    
                 <p><strong>Prénom:</strong> {{ $attrs.firstName }}</p>            
                 <p><strong>Nom:</strong> {{ $attrs.lastName }}</p>
                 <p><strong>Email:</strong> {{ $attrs.email }}</p>
@@ -15,7 +15,7 @@
                     <button type="submit" class="form-control btn btn-primary" name="submitAvatar" id="submitAvatar" @click.prevent="adminModifyAvatar($attrs.id)">Modifier</button>
                 </div>
             </form>
-            <span><button class="bg-light mb-3" v-bind="user" @click.prevent="adminDeleteUser($attrs.id)">Supprimer ce compte</button></span>
+            <span><button class="bg-light mb-5" v-bind="user" @click.prevent="adminDeleteUser($attrs.id)">Supprimer ce compte</button></span>
     </div>
 </template>
 

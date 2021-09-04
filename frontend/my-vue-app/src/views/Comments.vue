@@ -1,18 +1,22 @@
 <template>
-<adminNavBar></adminNavBar>
+<navBar></navBar>
     <div class="row">
         <div class="col">
-            <h3>Utilisateurs</h3>
-                <div v-for="user in users" :key="user" class="col d-flex flex-column" v-bind="user">
-                    <allProfiles v-bind="user"></allProfiles>
-                </div>
+            <h2>Tous les commentaires <i class="fas fa-quote-right"></i></h2>
+                <div v-if="comments">
+                    <div v-for="(comment) in comments" :key="comment.id" class="bg-light border border-dark shadow rounded mb-3">
+                        <p>Commentaire - gif n° {{comment.gifId}}</p>
+                        <p class="mb-2 bg-white">"{{ comment.content }}" <span v-for="(user) in users.filter((user) => {return user.id == comment.userId})">par <strong>{{user.firstName}} {{user.lastName}}</strong></span></p>
+                        <button class="mb-3 btn btn-secondary rounded" @click.prevent="adminDeleteComment(comment.id)">Effacer le commentaire</button>    
+                    </div>  
+                </div>        
+            </div>
         </div>
-    </div>
 </template>
 
 <script>
 import axios from "axios"
-import adminNavBar from '../components/adminNavBar.ce.vue'
+import navBar from '../components/navBar.ce.vue'
 import allProfiles from '../components/allProfiles.ce.vue'
 import allComments from '../components/allComments.ce.vue'
 
@@ -21,24 +25,11 @@ export default {
     name:"admin",
 
     components: {
-        adminNavBar,
+        navBar,
         allProfiles,
         allComments
     },
     created() {
-        axios
-            .get('http://localhost:3001/api/gifs',
-            {                                
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "Authorization": 'Bearer ' + this.token
-                }
-            })
-            .then(res => { this.gifs = res.data.gifs })
-            .catch(err => {
-              console.log(err + "Utilisateur inconnu ou Posts indisponibles");
-            }); 
 
         axios
             .get('http://localhost:3001/api/comments',
@@ -71,8 +62,6 @@ export default {
 
     data() {
         return {
-            gifs:[],
-            gif:{},
             comments:[],
             comment:{},
             content:{},
@@ -85,17 +74,6 @@ export default {
 
     methods: {
 
-        adminDeleteGif(id) {
-            axios
-            .delete(`http://localhost:3001/api/gifs/${id}/admin`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": "Bearer " + this.token
-                }
-            })
-            .then(() => this.$router.go())
-        },
 
         adminDeleteComment(id) {
             axios
@@ -115,7 +93,5 @@ export default {
 </script>
 
 <style>
-    li {
-        margin-left: 2rem;
-    }
+
 </style>

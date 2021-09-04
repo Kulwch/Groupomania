@@ -1,8 +1,11 @@
 <template>
     <div class="col">
         <div v-for="comment in comments" :key="comment.id" v-bind="comment">
-            <p>{{comment.content}}</p>
-            <button @click.prevent="adminDeleteComment(comment.id)">Supprimer</button>
+            <div class="col-10 mx-auto border border-dark rounded shadow mt-3">
+                <p>Commentaire - gif n° {{comment.gifId}}</p>
+                <p class="mb-2">"{{ comment.content }}" <span v-for="(user) in users.filter((user) => {return user.id == comment.userId})">par <strong>{{user.firstName}} {{user.lastName}}</strong></span></p>
+                <button @click.prevent="adminDeleteComment(comment.id)">Supprimer</button>
+            </div>            
         </div>
     </div>
 </template>
@@ -22,6 +25,7 @@ import axios from "axios"
         data() {
             return {
                 token: localStorage.getItem('token'),
+                users:[],
                 user: {
                     id:localStorage.getItem('userId'),
                     isAdmin:localStorage.getItem('isAdmin'),
@@ -40,6 +44,23 @@ import axios from "axios"
                 }
             })
             .then(res => { this.comments = res.data })
+            .catch(err => {
+              console.log(err + "Utilisateur inconnu ou commentaires indisponibles");
+            });
+
+            axios
+            .get('http://localhost:3001/api/users',
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": 'Bearer ' + this.token
+                }
+            })
+            .then(res => { this.users = res.data.users})
+            .catch(err => {
+              console.log(err + "Utilisateur inconnu ou profils indisponibles");
+            });
         },
 
         methods: {
@@ -53,7 +74,7 @@ import axios from "axios"
                 }
             })
             .then(() => this.$router.go())
-        }
+            }
         }
     }
 </script>

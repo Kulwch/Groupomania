@@ -7,7 +7,7 @@
                 <input type="statusText" class="form-control" id="statusText" placeholder="Exemple: Quand on fait ceci..." >
             </div>
             <div class="w-50 mx-auto mb-3">
-                <label for="gif" class="form-label">Gif : </label>
+                <label for="gif" class="form-label pr-1">Gif :</label>
                 <input type="file" class="form-control-file mx-auto" id="gif" name="gif" ref="gif" v-on:change="handleFileUpload()">                        
             </div>                    
             <button type="submit" class="btn btn-primary mb-3" @click.prevent="postGif">Publier</button>
