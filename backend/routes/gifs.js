@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('../middleware/auth');
-const adminOrModeratorAuth = require('../middleware/adminOrModeratorAuth');
+const adminAuth = require('../middleware/adminAuth');
 const multerGifs = require('../middleware/multer-gifs');
 
 const gifCtrl = require('../controllers/gifs');
@@ -13,10 +13,8 @@ router.delete('/:id', auth, multerGifs, gifCtrl.deleteGif);
 router.get('/:id', auth, gifCtrl.getOneGif);
 router.get('/', auth, gifCtrl.getAllGifs);
 
-// router.put('/:id/like', auth, gifCtrl.rateOneGif);
-
-router.put('/:id/admin', adminOrModeratorAuth, multerGifs, gifCtrl.adminOrModeratorModifyGif);
-router.delete('/:id/admin', adminOrModeratorAuth, multerGifs, gifCtrl.adminOrModeratorDeleteGif);
+router.put('/admin/:id', adminAuth, multerGifs, gifCtrl.modifyGif);
+router.delete('/admin/:id', adminAuth, multerGifs, gifCtrl.adminDeleteGif);
 
 module.exports = router;
 

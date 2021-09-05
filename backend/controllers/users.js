@@ -36,10 +36,11 @@ exports.login = (req, res, next) => {
                 }
                 res.status(200).json({
                     userId: user.id,
+                    isAdmin : user.isAdmin,
                     token: jwt.sign(
                         { 
                             userId: user.id,
-                            isAdmin : user.isAdmin
+                            isAdmin : user.isAdmin,
                         },
                         process.env.TOKEN_KEY,
                         { expiresIn: '2h' }
@@ -52,13 +53,13 @@ exports.login = (req, res, next) => {
 };
 
 exports.getProfile = (req, res, next) => {
-    db.User.findOne({attributes: ['firstName', 'lastName', 'email', 'isAdmin'], where: {id: req.params.id}})
+    db.User.findOne({attributes: ['id','firstName', 'lastName', 'email', 'avatarUrl', 'isAdmin'], where: {id: req.params.id}})
         .then(user => res.status(200).json({user}))
         .catch(error => res.status(404).json({error}))
 };
 
 exports.getAllProfiles = (req, res, next) => {
-    db.User.findAll({attributes: ['firstName', 'lastName', 'email', 'isAdmin']})
+    db.User.findAll({attributes: ['id','firstName', 'lastName', 'email','avatarUrl', 'isAdmin']})
         .then(users => res.status(200).json({users}))
         .catch(error => res.status(404).json({error}))
 };
@@ -73,7 +74,7 @@ exports.updateProfile = (req, res, next) => {
         .then(user => {
             if(user.id !== getUserId(req)){
                 return res.status(401).json({message: 'Requête non autorisée !'})
-            };
+            }
     user.update({...userObject}, {where: {id: req.params.id}})
             .then(() => res.status(200).json({message: "Profil modifié !"}))
             .catch(error => res.status(401).json({message: 'Modification non autorisée !'}))
@@ -85,7 +86,7 @@ exports.deleteProfile = (req, res, next) => {
         .then(user => {
             if(user.id !== getUserId(req)){
                 return res.status(401).json({message: 'Requête non autorisée !'})
-            };
+            }
     user.destroy({where: {id: req.params.id}})
         .then(() => res.status(200).json({message: 'Profil supprimé !'}))
         .catch(error => res.status(401).json({message: 'Vous n\'êtes pas autorisé à supprimer ce profil !'}))
@@ -107,4 +108,10 @@ exports.adminUpdateProfile = (req, res, next) => {
         db.User.update({...userObject}, {where: {id: req.params.id}})
             .then(() => res.status(200).json({message: "Profil modifié !"}))
             .catch(error => res.status(401).json({message: 'Modification impossible !'}))
+};
+
+exports.setUserAsAdmin = (req, res, next) => {      
+            db.User.update({isAdmin: true}, { where: { id: req.params.id }})
+                .then(() => res.status(200).json({ message: 'utilisateur promu admin !' }))
+                .catch(error => res.status(400).json({ error }))
 };
