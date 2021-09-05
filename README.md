@@ -27,7 +27,7 @@ Pre-requisites: Node.JS
 
     3° Then, go to frontend folder in terminal, and:
         - run "npm install"
-        - run " npm run dev"
+        - run " npm run dev" after going in the folder: "frontend/my-vue-app"
 
     Server will run on localhost:3000
 
