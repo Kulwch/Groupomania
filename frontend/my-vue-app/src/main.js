@@ -8,10 +8,13 @@ dom.watch()
 library.add(faCog, faUsers, faUser, faFilm, faQuoteRight, faSignOutAlt)
 
 
+
+
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 
 
 createApp(App)
 .use(router)
+
 .mount('#app')

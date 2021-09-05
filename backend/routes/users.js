@@ -17,4 +17,5 @@ router.get('/', auth, userCtrl.getAllProfiles);
 
 router.delete('/admin/del/:id', adminAuth, multerUsers, userCtrl.adminDeleteProfile);
 router.put('/admin/:id', adminAuth, multerUsers, userCtrl.adminUpdateProfile);
+router.post('/new/admin/:id', adminAuth, userCtrl.setUserAsAdmin);
 module.exports = router;

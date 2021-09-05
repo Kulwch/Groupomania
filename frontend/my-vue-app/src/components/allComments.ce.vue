@@ -2,41 +2,49 @@
     <div class="col">
         <div v-for="comment in comments" :key="comment.id" v-bind="comment">
             <div class="col-10 mx-auto border border-dark rounded shadow mt-3">
-                <p>Commentaire - gif n° {{comment.gifId}}</p>
-                <p class="mb-2">"{{ comment.content }}" <span v-for="(user) in users.filter((user) => {return user.id == comment.userId})">par <strong>{{user.firstName}} {{user.lastName}}</strong></span></p>
+                <p>Commentaire - gif n° {{ comment.gifId }}</p>
+                <p class="mb-2">
+                    "{{ comment.content }}"
+                    <span
+                        v-for="(user) in users.filter((user) => { return user.id == comment.userId })"
+                    >
+                        par
+                        <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+                    </span>
+                </p>
                 <button @click.prevent="adminDeleteComment(comment.id)">Supprimer</button>
-            </div>            
+            </div>
         </div>
     </div>
 </template>
 <script>
 import axios from "axios"
 
-    export default {
-        name:"allComments",
+export default {
+    name: "allComments",
 
-        props:{
-            content: {
-                type:Text,
-                required: true
-            }
-        }, 
+    props: {
+        content: {
+            type: Text,
+            required: true
+        }
+    },
 
-        data() {
-            return {
-                token: localStorage.getItem('token'),
-                users:[],
-                user: {
-                    id:localStorage.getItem('userId'),
-                    isAdmin:localStorage.getItem('isAdmin'),
-                },
-                comments:[]
+    data() {
+        return {
+            token: localStorage.getItem('token'),
+            users: [],
+            user: {
+                id: localStorage.getItem('userId'),
+                isAdmin: localStorage.getItem('isAdmin'),
+            },
+            comments: []
 
-            }
-        },
+        }
+    },
 
-        created() {
-            axios.get('http://localhost:3001/api/comments',
+    created() {
+        axios.get('http://localhost:3001/api/comments',
             {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -45,40 +53,39 @@ import axios from "axios"
             })
             .then(res => { this.comments = res.data })
             .catch(err => {
-              console.log(err + "Utilisateur inconnu ou commentaires indisponibles");
+                console.log(err + "Utilisateur inconnu ou commentaires indisponibles");
             });
 
-            axios
+        axios
             .get('http://localhost:3001/api/users',
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "Authorization": 'Bearer ' + this.token
-                }
-            })
-            .then(res => { this.users = res.data.users})
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": 'Bearer ' + this.token
+                    }
+                })
+            .then(res => { this.users = res.data.users })
             .catch(err => {
-              console.log(err + "Utilisateur inconnu ou profils indisponibles");
+                console.log(err + "Utilisateur inconnu ou profils indisponibles");
             });
-        },
+    },
 
-        methods: {
-            adminDeleteComment(id) {
+    methods: {
+        adminDeleteComment(id) {
             axios
-            .delete(`http://localhost:3001/api/comments/admin/${id}`,
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    "Authorization": "Bearer " + this.token
-                }
-            })
-            .then(() => this.$router.go())
-            }
+                .delete(`http://localhost:3001/api/comments/admin/${id}`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "Authorization": "Bearer " + this.token
+                        }
+                    })
+                .then(() => this.$router.go())
         }
     }
+}
 </script>
 
 <style>
-
 </style>

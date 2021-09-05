@@ -11,10 +11,11 @@
 localStorage.clear()
 
 export default {
-    created(){
-      setTimeout( () => this.$router.push({ path: '/'}), 5000);
+    created() {
+        setTimeout(() => this.$router.push({ path: '/' }), 5000);
     }
 }
 </script>
 
-<style></style>
+<style>
+</style>

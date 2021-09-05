@@ -1,3 +1,10 @@
+/**
+ * Multer-config - middleware
+ * 
+ * Package @multer is used to manage the gifs files: save, modify, delete in the images folder
+ * 
+ */
+
 const multer = require('multer');
 
 const MIME_TYPES = {

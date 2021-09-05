@@ -3,7 +3,7 @@
     <div class="row d-flex flex-column">
         <postGifForm></postGifForm>
         <gif></gif>
-    </div>    
+    </div>
 </template>
 
 <script>
@@ -16,14 +16,14 @@ export default {
         postGifForm,
         gif,
         navBar,
-    },                   
+    },
 
     data() {
         return {
-          
-            
+
+
         }
-    },   
+    },
 }
 </script>
 

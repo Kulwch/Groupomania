@@ -4,22 +4,21 @@
   <div class="container">
     <router-view />
   </div>
-  
 </template>
 
 <script>
 import navBar from './components/navBar.ce.vue'
 
 export default {
-  name:'App',
+  name: 'App',
   components: {
     navBar
-    
+
   },
 
   data() {
-    return {      
-      
+    return {
+
     }
   }
 }
