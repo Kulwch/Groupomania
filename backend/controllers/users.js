@@ -110,8 +110,12 @@ exports.adminUpdateProfile = (req, res, next) => {
             .catch(error => res.status(401).json({message: 'Modification impossible !'}))
 };
 
-exports.setUserAsAdmin = (req, res, next) => {      
-            db.User.update({isAdmin: true}, { where: { id: req.params.id }})
+exports.setUserAsAdmin = (req, res, next) => { 
+        db.User.findOne({where: {id: req.body.userId}})
+            .then((user) => { if(user.isAdmin === true){
+                db.User.update({isAdmin: true}, { where: { id: req.params.id }})
                 .then(() => res.status(200).json({ message: 'utilisateur promu admin !' }))
                 .catch(error => res.status(400).json({ error }))
+            }})
+            .catch(error => res.status(400).json({ error}))           
 };

@@ -28,11 +28,17 @@
                 <div v-if="gifIsShow" id="allgifs" class="col-10 d-flex flex-column mx-auto">
                     <div
                         class="col mx-auto border border-dark rounded shadow mt-3"
-                        v-for="gif in gifs"
+                        v-for="gif in gifs.slice().reverse()"
                         :key="gif.id"
                     >
                         <figure class="mw-75">
                             <figcaption class="h4 text-primary">{{ gif.statusText }}</figcaption>
+                            <p
+                                v-for="(user) in users.filter((user) => { return user.id == gif.userId })"
+                            >
+                                publié par
+                                <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+                            </p>
                             <img class="mw-75" :src="gif.imageUrl" alt="image" />
                         </figure>
                         <button
@@ -46,7 +52,15 @@
                                 :key="comment.id"
                                 class="bg-light rounded"
                             >
-                                <p class="mb-2">{{ comment.content }}</p>
+                                <p class="mb-2">
+                                    {{ comment.content }}
+                                    <span
+                                        v-for="(user) in users.filter((user) => { return user.id == comment.userId })"
+                                    >
+                                        par
+                                        <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+                                    </span>
+                                </p>
                                 <button
                                     class="mb-3 btn btn-secondary rounded"
                                     @click.prevent="adminDeleteComment(comment.id)"
@@ -148,7 +162,7 @@ export default {
 
         adminDeleteGif(id) {
             axios
-                .delete(`http://localhost:3001/api/gifs/${id}/admin`,
+                .delete(`http://localhost:3001/api/gifs/admin/${id}`,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -160,7 +174,7 @@ export default {
 
         adminDeleteComment(id) {
             axios
-                .delete(`http://localhost:3001/api/comments/${id}/admin`,
+                .delete(`http://localhost:3001/api/comments/admin/${id}`,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -169,9 +183,7 @@ export default {
                     })
                 .then(() => this.$router.go())
         },
-
-    }
-
+    },
 }
 
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div
         class="col mx-auto border border-dark rounded shadow mt-3"
-        v-for="gif in gifs"
+        v-for="gif in gifs.slice().reverse()"
         :key="gif.id"
     >
         <figure class="mw-75">

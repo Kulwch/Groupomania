@@ -51,12 +51,9 @@ export default {
                 email: document.getElementById('email').value,
                 password: document.getElementById('password').value,
             })
-                .then((res) => {
-                    localStorage.setItem("token", res.data.token)
-                    localStorage.setItem("userId", res.data.userId)
-                    localStorage.setItem("isAdmin", res.data.isAdmin)
-                    localStorage.setItem("isModerator", res.data.isModerator)
-                    this.$router.push('/gifs');
+                .then(() => {
+                   
+                    this.$router.push('/registered');
                 })
                 .catch(() => {
                     this.errorAlert = true

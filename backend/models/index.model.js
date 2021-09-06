@@ -70,6 +70,7 @@ db.Comment.belongsTo(db.User,
     onUpdate: 'NO ACTION',
   }
 );
+
 db.Comment.belongsTo(db.Gif,
   {
     foreignKey: {

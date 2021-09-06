@@ -121,9 +121,9 @@ export default {
 
         setUserAdmin(id) {
             axios
-                .post(`http://localhost:3001/api/users/new/admin/${id}`,
+                .put(`http://localhost:3001/api/users/new/admin/${id}`,
                     {
-                        isAdmin: true,
+                        userId: localStorage.getItem("userId"),
                         headers: {
                             'Content-Type': 'application/json',
                             "Authorization": "Bearer " + this.token
