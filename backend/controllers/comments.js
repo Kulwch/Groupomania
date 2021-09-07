@@ -33,5 +33,5 @@ exports.adminDeleteComment = (req, res, next) => {
     db.Comment.destroy({where: { id: req.params.id }})
             .then(() => res.status(200).json({ message: 'commentaire effacé !'}))
             .catch(error => res.status(400).json({error}))
-    .catch(error => res.status(404).json({error}))
+    .catch(error => res.status(403).json({ message: 'requête réservée aux admins'}))
 };

@@ -66,7 +66,7 @@ exports.adminDeleteGif = (req, res, next) => {
             fs.unlink(`gifs/${filename}`, () => {
                 gif.destroy({ where: { id: req.params.id } })
                     .then(() => res.status(200).json({ message: 'Gif supprimé !' }))
-                    .catch(error => res.status(400).json({ error }))
+                    .catch(error => res.status(403).json({ message: 'requête réservée aux admins' }))
             })
         });
 };

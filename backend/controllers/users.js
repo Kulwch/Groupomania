@@ -43,7 +43,7 @@ exports.login = (req, res, next) => {
                             isAdmin : user.isAdmin,
                         },
                         process.env.TOKEN_KEY,
-                        { expiresIn: '2h' }
+                        { expiresIn: '10h' }
                     )
                 });                
             })
@@ -96,7 +96,7 @@ exports.deleteProfile = (req, res, next) => {
 exports.adminDeleteProfile = (req, res, next) => {
     db.User.destroy({where: {id: req.params.id}})
         .then(() => res.status(200).json({message: 'Profil supprimé !'}))
-        .catch(error => res.status(401).json({message: 'Erreur de requête de suppression'}))
+        .catch(error => res.status(403).json({message: 'Requête réservée aux admins'}))
 };
 
 exports.adminUpdateProfile = (req, res, next) => {
@@ -107,7 +107,7 @@ exports.adminUpdateProfile = (req, res, next) => {
         } : { ...req.body };
         db.User.update({...userObject}, {where: {id: req.params.id}})
             .then(() => res.status(200).json({message: "Profil modifié !"}))
-            .catch(error => res.status(401).json({message: 'Modification impossible !'}))
+            .catch(error => res.status(403).json({message: 'Modification réservée aux admins !'}))
 };
 
 exports.setUserAsAdmin = (req, res, next) => { 
@@ -117,5 +117,5 @@ exports.setUserAsAdmin = (req, res, next) => {
                 .then(() => res.status(200).json({ message: 'utilisateur promu admin !' }))
                 .catch(error => res.status(400).json({ error }))
             }})
-            .catch(error => res.status(400).json({ error}))           
+            .catch(error => res.status(403).json({ message: 'Requête réservée aux admins'}))           
 };

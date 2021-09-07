@@ -17,8 +17,8 @@ module.exports = (req, res, next) => {
             next();
         }
     } catch {
-        res.status(401).json({
-            error: "non autorisé"
+        res.status(403).json({
+            error: "Requête réservée aux admins"
         });
     }
 };

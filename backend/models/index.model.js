@@ -4,6 +4,7 @@ const Sequelize = require('sequelize')
 const dotenv = require('dotenv').config()
 const db = {}
 
+// @ts-ignore
 const sequelize = new Sequelize('mysql://root:root@localhost:3306/database_development_OC')
 
 db.Gif = require('./Gif.model')(sequelize, Sequelize);
@@ -70,13 +71,12 @@ db.Comment.belongsTo(db.User,
     onUpdate: 'NO ACTION',
   }
 );
-
 db.Comment.belongsTo(db.Gif,
   {
     foreignKey: {
       name: 'gifId',
-      allowNull: false
-    },
+      allowNull: false,
+  },
     onDelete: 'CASCADE',
     onUpdate: 'NO ACTION',
   }
