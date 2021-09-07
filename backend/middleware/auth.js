@@ -19,6 +19,6 @@ module.exports = (req, res, next) => {
     if (userId && userId !== getUserIdFromToken(req)) throw new Error("userId non valide");
     next();
   } catch (error) {
-    res.status(401).json({message: 'Requête non valide !'});
+    res.status(401).json({message: 'Utilisateur non enregistré !'});
   }
 };
