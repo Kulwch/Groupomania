@@ -5,7 +5,7 @@
             <h2 class="text-danger">Administration</h2>
             <h3 class="h6">Cliquer sur le bouton pour afficher la section correspondante</h3>
             <div class="d-flex flex-column">
-                <button class="btn btn-primary mt-3 mb-3" @click="profileIsShow = !profileIsShow">
+                <button class="w-25 mx-auto btn btn-primary mt-3 mb-3" @click="profileIsShow = !profileIsShow">
                     Profils
                     <i class="fas fa-users"></i>
                 </button>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-primary mb-3" @click="gifIsShow = !gifIsShow">
+                <button class="w-25 mx-auto btn btn-primary mb-3" @click="gifIsShow = !gifIsShow">
                     Gifs
                     <i class="fas fa-film"></i>
                 </button>
@@ -33,13 +33,14 @@
                     >
                         <figure class="mw-75">
                             <figcaption class="h4 text-primary">{{ gif.statusText }}</figcaption>
-                            <p
+                            <p class="d-flex"
                                 v-for="(user) in users.filter((user) => { return user.id == gif.userId })"
                             >
-                                publié par
-                                <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+                                publié par 
+                                <strong>&nbsp; {{ user.firstName }} {{ user.lastName }}</strong>&nbsp;, <span v-if="user.isAdmin===true">&nbsp;Admin</span><span v-else>&nbsp;Membre</span>
+                                <img v-if="user.avatarUrl !== null" class="mx-auto w-25" :src="user.avatarUrl" alt="avatar de l'utilisateur" />
                             </p>
-                            <img class="mw-75" :src="gif.imageUrl" alt="image" />
+                            <img  class="mw-75" :src="gif.imageUrl" alt="image" />
                         </figure>
                         <button
                             class="mb-3 btn btn-secondary rounded"
@@ -70,8 +71,9 @@
                     </div>
                 </div>
 
-                <button class="btn btn-primary mb-3" @click="commentIsShow = !commentIsShow">
-                    Commentaires
+                <button class="w-25 mx-auto btn btn-primary mb-3" @click="commentIsShow = !commentIsShow">
+                    <i class="fas fa-quote-left"></i>
+                    Commentaires                    
                     <i class="fas fa-quote-right"></i>
                 </button>
                 <div v-if="commentIsShow" id="allComments">

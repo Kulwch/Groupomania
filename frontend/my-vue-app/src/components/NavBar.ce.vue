@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-dark rounded mb-3">
+  <div class="container-fluid mb-3">
     <div class="d-flex align-items-center justify-content-around">
       <router-link to="/gifs" class="text-decoration-none text-danger">
         Publications

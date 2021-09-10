@@ -21,12 +21,20 @@
         <p v-else>
             <strong>Rôle:</strong> Utilisateur
         </p>
+        <p>
+            <strong>Fonction au sein de l'entreprise :</strong>
+            {{ user.job }}
+        </p>
+        <p>
+            <strong>Inscrit(e) depuis le :</strong>
+            {{ $attrs.createdAt }}
+        </p>
         <div class="w-50 mx-auto mb-3">
             <img class="mw-100" :src="$attrs.avatarUrl" alt="avatar" />
         </div>
         <button
             v-if="$attrs.isAdmin !== true"
-            class="btn btn-primary mx-auto mb-2"
+            class="btn btn-outline-primary mx-auto mb-2"
             @click.prevent="setUserAdmin($attrs.id)"
         >Promouvoir admin</button>
     </div>
@@ -38,7 +46,7 @@
             @submit.prevent="adminModifyAvatar($attrs.id)"
         >
             <div class="mx-auto w-50 mb-3">
-                <label for="avatar" class="form-label">Changer d'avatar</label>
+                <label for="avatar" class="form-label">Changer d'avatar&nbsp;</label>
                 <input
                     type="file"
                     class="form-control-file"
@@ -49,7 +57,7 @@
                 />
                 <button
                     type="submit"
-                    class="form-control btn btn-primary"
+                    class="form-control btn btn-outline-primary"
                     name="submitAvatar"
                     id="submitAvatar"
                     @click.prevent="adminModifyAvatar($attrs.id)"
@@ -58,7 +66,7 @@
         </form>
         <span>
             <button
-                class="bg-light mb-5"
+                class="btn btn-outline-primary mb-5"
                 v-bind="user"
                 @click.prevent="adminDeleteUser($attrs.id)"
             >Supprimer ce compte</button>

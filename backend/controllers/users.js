@@ -53,13 +53,13 @@ exports.login = (req, res, next) => {
 };
 
 exports.getProfile = (req, res, next) => {
-    db.User.findOne({attributes: ['id','firstName', 'lastName', 'email', 'avatarUrl', 'isAdmin'], where: {id: req.params.id}})
+    db.User.findOne({attributes: ['id','firstName', 'lastName', 'email', 'avatarUrl', 'isAdmin', 'createdAt', 'job'], where: {id: req.params.id}})
         .then(user => res.status(200).json({user}))
         .catch(error => res.status(404).json({error}))
 };
 
 exports.getAllProfiles = (req, res, next) => {
-    db.User.findAll({attributes: ['id','firstName', 'lastName', 'email','avatarUrl', 'isAdmin']})
+    db.User.findAll({attributes: ['id','firstName', 'lastName', 'email','avatarUrl', 'isAdmin', 'createdAt', 'job']})
         .then(users => res.status(200).json({users}))
         .catch(error => res.status(404).json({error}))
 };

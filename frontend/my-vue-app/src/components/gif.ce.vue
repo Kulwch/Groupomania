@@ -8,7 +8,8 @@
             <figcaption class="h4 text-danger">{{ gif.statusText }}</figcaption>
             <p v-for="(user) in users.filter((user) => { return user.id == gif.userId })">
                 publié par
-                <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+                <strong> {{ user.firstName }} {{ user.lastName }}</strong>&nbsp;, <span v-if="user.isAdmin===true">&nbsp;Admin&nbsp;</span><span v-else>&nbsp;Membre&nbsp;</span>
+                                <img v-if="user.avatarUrl !== null" class="mx-auto h-25" :src="user.avatarUrl" alt="avatar de l'utilisateur" />
             </p>
             <img class="mw-75" :src="gif.imageUrl" alt="gif" />
         </figure>

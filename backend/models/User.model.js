@@ -43,6 +43,9 @@ module.exports = (sequelize, Sequelize) => {
     isAdmin: {
       type: Sequelize.BOOLEAN,
       defaultValue: false
+    },
+    job: {
+      type: Sequelize.STRING
     }
   }, {
     sequelize,

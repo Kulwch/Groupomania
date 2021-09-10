@@ -21,6 +21,14 @@
         <p v-else>
             <strong>Rôle:</strong> Utilisateur
         </p>
+        <p>
+            <strong>Fonction au sein de l'entreprise :</strong>
+            {{ user.job }}
+        </p>
+        <p>
+            <strong>Membre depuis le :</strong>
+            {{ user.createdAt }}
+        </p>
         <div class="w-50 mx-auto mb-3">
             <img class="mw-100" :src="user.avatarUrl" alt="avatar" />
         </div>
@@ -31,7 +39,7 @@
     >
         <form id="form" class="mt-5" enctype="multipart/form-data" @submit.prevent="modifyAvatar()">
             <div class="mx-auto w-50 mb-3">
-                <label for="avatar" class="form-label">Changer d'avatar</label>
+                <label for="avatar" class="form-label">Changer d'avatar&nbsp;</label>
                 <input
                     type="file"
                     class="form-control-file"
@@ -42,7 +50,7 @@
                 />
                 <button
                     type="submit"
-                    class="form-control btn btn-primary"
+                    class="form-control btn btn-outline-primary"
                     name="submitAvatar"
                     id="submitAvatar"
                     @click.prevent="modifyAvatar"
@@ -51,7 +59,7 @@
         </form>
         <span>
             <button
-                class="bg-light mb-3"
+                class="mb-3 btn btn-outline-primary"
                 v-bind="user"
                 @click.prevent="deleteUser(user.id)"
             >Supprimer votre compte</button>
