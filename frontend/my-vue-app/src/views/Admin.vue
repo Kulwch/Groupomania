@@ -36,7 +36,7 @@
                             <p class="d-flex"
                                 v-for="(user) in users.filter((user) => { return user.id == gif.userId })"
                             >
-                                publié par 
+                                publié le {{ gif.createdAt }}, par 
                                 <strong>&nbsp; {{ user.firstName }} {{ user.lastName }}</strong>&nbsp;, <span v-if="user.isAdmin===true">&nbsp;Admin</span><span v-else>&nbsp;Membre</span>
                                 <img v-if="user.avatarUrl !== null" class="mx-auto w-25" :src="user.avatarUrl" alt="avatar de l'utilisateur" />
                             </p>
@@ -59,7 +59,7 @@
                                         v-for="(user) in users.filter((user) => { return user.id == comment.userId })"
                                     >
                                         par
-                                        <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+                                        <strong>{{ user.firstName }} {{ user.lastName }}</strong>, le {{ comment.createdAt}}
                                     </span>
                                 </p>
                                 <button
