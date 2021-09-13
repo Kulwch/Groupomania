@@ -27,7 +27,7 @@
         </p>
         <p>
             <strong>Membre depuis le :</strong>
-            {{ user.createdAt }}
+            {{ dateTime(user.createdAt) }}
         </p>
         <div class="w-50 mx-auto mb-3">
             <img class="mw-100" :src="user.avatarUrl" alt="avatar" />
@@ -69,6 +69,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 export default {
     name: "profile",
 
@@ -99,6 +100,11 @@ export default {
     },
 
     methods: {
+
+        dateTime (value) {
+                return moment(value).format('DD-MM-YYYY');
+        },
+
         handleFileUpload() {
             this.image = this.$refs.image.files[0];
             this.imageUrl = URL.createObjectURL(this.image)

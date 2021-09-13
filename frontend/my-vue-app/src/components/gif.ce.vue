@@ -7,7 +7,7 @@
         <figure class="mw-75">
             <figcaption class="h4 text-danger">{{ gif.statusText }}</figcaption>
             <p v-for="(user) in users.filter((user) => { return user.id == gif.userId })">
-                publié le {{ gif.createdAt }}, par
+                publié le {{ dateTime(gif.createdAt) }}, par
                 <strong> {{ user.firstName }} {{ user.lastName }}</strong>&nbsp;, <span v-if="user.isAdmin===true">&nbsp;Admin&nbsp;</span><span v-else>&nbsp;Membre&nbsp;</span>
                                 <img v-if="user.avatarUrl !== null" class="mx-auto h-25" :src="user.avatarUrl" alt="avatar de l'utilisateur" />
             </p>
@@ -34,7 +34,7 @@
                         par
                         <strong>{{ user.firstName }} {{ user.lastName }}</strong>
                     </span>
-                    le {{comment.createdAt}}
+                    le {{ dateTime(comment.createdAt) }}
                 </p>
                 <span v-if="userId == comment.userId">
                     <button
@@ -50,6 +50,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 import postComment from '../components/postComment.ce.vue'
 
 export default {
@@ -121,6 +122,10 @@ export default {
     },
 
     methods: {
+
+        dateTime (value) {
+                return moment(value).format('DD-MM-YYYY HH:mm');
+        },
 
         deleteGif(id) {
             axios

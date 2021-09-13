@@ -36,7 +36,7 @@
                             <p class="d-flex"
                                 v-for="(user) in users.filter((user) => { return user.id == gif.userId })"
                             >
-                                publié le {{ gif.createdAt }}, par 
+                                publié le <span v-bind="gif">&nbsp;{{ dateTime(gif.createdAt) }}</span>, par 
                                 <strong>&nbsp; {{ user.firstName }} {{ user.lastName }}</strong>&nbsp;, <span v-if="user.isAdmin===true">&nbsp;Admin</span><span v-else>&nbsp;Membre</span>
                                 <img v-if="user.avatarUrl !== null" class="mx-auto w-25" :src="user.avatarUrl" alt="avatar de l'utilisateur" />
                             </p>
@@ -59,7 +59,7 @@
                                         v-for="(user) in users.filter((user) => { return user.id == comment.userId })"
                                     >
                                         par
-                                        <strong>{{ user.firstName }} {{ user.lastName }}</strong>, le {{ comment.createdAt}}
+                                        <strong>{{ user.firstName }} {{ user.lastName }}</strong>, le {{ dateTime(comment.createdAt)}}
                                     </span>
                                 </p>
                                 <button
@@ -86,6 +86,7 @@
 
 <script>
 import axios from "axios"
+import moment from 'moment'
 import navBar from '../components/navBar.ce.vue'
 import allProfiles from '../components/allProfiles.ce.vue'
 import allComments from '../components/allComments.ce.vue'
@@ -162,6 +163,10 @@ export default {
 
     methods: {
 
+        dateTime (value) {
+                return moment(value).format('DD-MM-YYYY HH:mm');
+        },
+
         adminDeleteGif(id) {
             axios
                 .delete(`http://localhost:3001/api/gifs/admin/${id}`,
@@ -185,7 +190,7 @@ export default {
                     })
                 .then(() => this.$router.go())
         },
-    },
+    }
 }
 
 </script>

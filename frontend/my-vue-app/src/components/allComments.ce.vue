@@ -9,7 +9,7 @@
                         v-for="(user) in users.filter((user) => { return user.id == comment.userId })"
                     >
                         par
-                        <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+                        <strong>{{ user.firstName }} {{ user.lastName }}</strong> le &nbsp; {{ dateTime(comment.createdAt) }}
                     </span>
                 </p>
                 <button @click.prevent="adminDeleteComment(comment.id)">Supprimer</button>
@@ -19,6 +19,7 @@
 </template>
 <script>
 import axios from "axios"
+import moment from 'moment'
 
 export default {
     name: "allComments",
@@ -72,6 +73,11 @@ export default {
     },
 
     methods: {
+
+        dateTime (value) {
+                return moment(value).format('DD-MM-YYYY HH:mm');
+        },
+
         adminDeleteComment(id) {
             axios
                 .delete(`http://localhost:3001/api/comments/admin/${id}`,

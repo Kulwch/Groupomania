@@ -8,8 +8,6 @@ dom.watch()
 library.add(faCog, faUsers, faUser, faFilm, faQuoteRight, faQuoteLeft, faSignOutAlt)
 
 
-
-
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 

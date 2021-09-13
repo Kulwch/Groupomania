@@ -27,7 +27,7 @@
         </p>
         <p>
             <strong>Inscrit(e) depuis le :</strong>
-            {{ $attrs.createdAt }}
+            {{ dateTime($attrs.createdAt) }}
         </p>
         <div class="w-50 mx-auto mb-3">
             <img class="mw-100" :src="$attrs.avatarUrl" alt="avatar" />
@@ -76,6 +76,7 @@
 
 <script>
 import axios from "axios"
+import moment from 'moment'
 
 export default {
     name: "user",
@@ -92,6 +93,11 @@ export default {
     },
 
     methods: {
+
+        dateTime (value) {
+                return moment(value).format('DD-MM-YYYY');
+        },
+
         adminDeleteUser(id) {
             axios.
                 delete(`http://localhost:3001/api/users/admin/del/${id}`,
