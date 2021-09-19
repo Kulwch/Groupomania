@@ -6,7 +6,15 @@ const routes =[
     {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue')
   },
   {
     path: '/signup',
@@ -16,7 +24,10 @@ const routes =[
   {
     path: '/logout',
     name: 'Logout',
-    component: () => import('../views/Logout.vue')
+    component: () => import('../views/Logout.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/registered',
@@ -26,23 +37,39 @@ const routes =[
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import('../views/Profile.vue')
-  },
-  {
-      path: '/gifs',
-      name: 'Gifs',
-      component: () => import('../views/Gifs.vue'),
+    component: () => import('../views/Profile.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/admin/',
     name: 'Admin',
-    component: () => import('../views/Admin.vue')
+    component: () => import('../views/Admin.vue'),
+    meta: {
+      requiresAuth: true
+    }
   }
     ]
+
+
 
 const router = createRouter({
     history: createWebHistory(),
     routes 
+})
+
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!localStorage.getItem('userId')) {
+      next({ name: 'Login' })
+    } else {
+      next() 
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

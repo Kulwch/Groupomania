@@ -57,6 +57,7 @@ export default {
                 .then(() => this.$router.go())
 
         },
+        
     }
 }
 

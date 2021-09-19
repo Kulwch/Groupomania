@@ -37,7 +37,7 @@ export default {
                     localStorage.setItem("token", res.data.token)
                     localStorage.setItem("userId", res.data.userId)
                     localStorage.setItem("isAdmin", res.data.isAdmin)
-                    this.$router.push('/gifs');
+                    this.$router.push('/');
                 })
                 .catch(() => {
                     this.errorAlert = true

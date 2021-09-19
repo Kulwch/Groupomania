@@ -22,10 +22,6 @@
             <strong>Rôle:</strong> Utilisateur
         </p>
         <p>
-            <strong>Fonction au sein de l'entreprise :</strong>
-            {{ user.job }}
-        </p>
-        <p>
             <strong>Inscrit(e) depuis le :</strong>
             {{ dateTime($attrs.createdAt) }}
         </p>

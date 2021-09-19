@@ -1,42 +1,31 @@
 <template>
-    <div id="home" class="row">
-        <div class="col col-md-6 mx-auto border border-dark rounded shadow bg-light">
-            <h2 class="h4 mt-3">Connexion</h2>
-            <loginForm />
-            <br />
-            <div class="mb-3">
-                <router-link
-                    to="/signup"
-                >Pas encore inscrit ? Cliquez ici pour rejoindre vos collègues !</router-link>
-            </div>
-        </div>
+    <navBar></navBar>
+    <div class="row d-flex flex-column">
+        <postGifForm></postGifForm>
+        <gif></gif>
     </div>
 </template>
 
 <script>
-import loginForm from '../components/loginForm.ce.vue'
-
+import navBar from '../components/navBar.ce.vue'
+import gif from '../components/gif.ce.vue'
+import postGifForm from '../components/postGifForm.ce.vue'
 export default {
-    name: "Home",
-
+    name: 'Gifs',
     components: {
-        loginForm,
-    }, 
+        postGifForm,
+        gif,
+        navBar,
+    },
 
     data() {
         return {
-            userId: localStorage.getItem("userId")
+            userId: localStorage.getItem('userId')
         }
     },
-
-    methods: {
-        
-        
-    }
-
 }
-
 </script>
+
 
 <style>
 </style>
