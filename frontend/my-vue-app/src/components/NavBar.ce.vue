@@ -1,9 +1,9 @@
 <template>
   <div class="border border-dark rounded mb-3">
     <div class="d-flex align-items-center justify-content-around">
-      <router-link to="/gifs" class="text-decoration-none text-danger">
+      <router-link to="/" class="text-decoration-none text-danger">
         Publications
-        <i class="fas fa-film"></i>
+        <i class="fas fa-photo-video"></i>
       </router-link>
       <router-link to="/profile" class="text-decoration-none text-danger">
         Profil

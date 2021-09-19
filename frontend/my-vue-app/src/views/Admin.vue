@@ -23,7 +23,7 @@
 
                 <button class="w-25 mx-auto btn btn-primary mb-3" @click="gifIsShow = !gifIsShow">
                     Gifs
-                    <i class="fas fa-film"></i>
+                    <i class="fas fa-photo-video"></i>
                 </button>
                 <div v-if="gifIsShow" id="allgifs" class="col-10 d-flex flex-column mx-auto">
                     <div

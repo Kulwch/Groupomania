@@ -12,7 +12,7 @@
                 />
             </div>
             <div class="w-50 mx-auto mb-3">
-                <label for="gif" class="form-label pr-1">Gif :</label>
+                <label for="gif" class="form-label pr-1">Gif :&nbsp;</label>
                 <input
                     type="file"
                     class="form-control-file mx-auto"

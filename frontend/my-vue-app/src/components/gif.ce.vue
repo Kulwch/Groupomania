@@ -9,7 +9,7 @@
             <p v-for="(user) in users.filter((user) => { return user.id == gif.userId })">
                 publié le {{ dateTime(gif.createdAt) }}, par
                 <strong> {{ user.firstName }} {{ user.lastName }}</strong>&nbsp;, <span v-if="user.isAdmin===true">&nbsp;Admin&nbsp;</span><span v-else>&nbsp;Membre&nbsp;</span>
-                                <img v-if="user.avatarUrl !== null" class="mx-auto h-25" :src="user.avatarUrl" alt="avatar de l'utilisateur" />
+                                <img v-if="user.avatarUrl !== null" class="mx-auto" height="75" width="50" :src="user.avatarUrl" alt="avatar de l'utilisateur" />
             </p>
             <img class="mw-75" :src="gif.imageUrl" alt="gif" />
         </figure>
