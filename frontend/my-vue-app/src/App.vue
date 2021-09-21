@@ -27,5 +27,8 @@ export default {
 <style>
 #app {
   text-align: center;
+  font-family: 'Comfortaa', Sans-serif;
 }
+
+
 </style>

@@ -15,7 +15,7 @@
         </figure>
         <span v-if="userId == gif.userId">
             <button
-                class="mb-3 btn btn-secondary rounded"
+                class="mb-3 btn btn-danger rounded"
                 v-bind="gif"
                 @click.prevent="deleteGif(gif.id)"
             >Supprimer le gif</button>
@@ -24,7 +24,7 @@
             <div
                 v-for="(comment) in comments.filter((comment) => { return comment.gifId == gif.id })"
                 :key="comment.id"
-                class="bg-light rounded"
+                class="bg-primary bg-gradient rounded"
             >
                 <p class="mb-2">
                     "{{ comment.content }}"
@@ -38,7 +38,7 @@
                 </p>
                 <span v-if="userId == comment.userId">
                     <button
-                        class="mb-3 btn btn-secondary rounded"
+                        class="mb-3 btn btn-danger rounded"
                         @click.prevent="deleteComment(comment.id)"
                     >Effacer le commentaire</button>
                 </span>

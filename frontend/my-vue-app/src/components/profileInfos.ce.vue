@@ -31,7 +31,7 @@
     </div>
     <div
         v-if="userId == user.id"
-        class="d-flex flex-column col-8 mx-auto border border-dark rounded shadow mt-3"
+        class="d-flex flex-column col-8 mx-auto border border-dark rounded shadow mt-3 bg-white"
     >
         <form id="form" class="mt-5" enctype="multipart/form-data" @submit.prevent="modifyAvatar()">
             <div class="mx-auto w-50 mb-3">
@@ -46,7 +46,7 @@
                 />
                 <button
                     type="submit"
-                    class="form-control btn btn-outline-primary"
+                    class="form-control btn btn-outline-danger"
                     name="submitAvatar"
                     id="submitAvatar"
                     @click.prevent="modifyAvatar"
@@ -55,7 +55,7 @@
         </form>
         <span>
             <button
-                class="mb-3 btn btn-outline-primary"
+                class="mb-3 btn btn-outline-danger"
                 v-bind="user"
                 @click.prevent="deleteUser(user.id)"
             >Supprimer votre compte</button>

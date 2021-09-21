@@ -1,6 +1,6 @@
 <template>
     <div
-        class="d-flex flex-column align-items-start col-8 mx-auto border border-dark rounded shadow bg-white"
+        class="d-flex flex-column align-items-start col-8 mx-auto border border-dark rounded shadow bg-primary bg-gradient"
         v-bind="$attrs"
     >
         <p>
@@ -30,7 +30,7 @@
         </div>
         <button
             v-if="$attrs.isAdmin !== true"
-            class="btn btn-outline-primary mx-auto mb-2"
+            class="btn btn-outline-danger mx-auto mb-2"
             @click.prevent="setUserAdmin($attrs.id)"
         >Promouvoir admin</button>
     </div>
@@ -53,7 +53,7 @@
                 />
                 <button
                     type="submit"
-                    class="form-control btn btn-outline-primary"
+                    class="form-control btn btn-outline-danger"
                     name="submitAvatar"
                     id="submitAvatar"
                     @click.prevent="adminModifyAvatar($attrs.id)"
@@ -62,7 +62,7 @@
         </form>
         <span>
             <button
-                class="btn btn-outline-primary mb-5"
+                class="btn btn-outline-danger mb-5"
                 v-bind="user"
                 @click.prevent="adminDeleteUser($attrs.id)"
             >Supprimer ce compte</button>

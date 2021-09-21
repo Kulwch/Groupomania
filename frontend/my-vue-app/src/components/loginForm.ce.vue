@@ -9,7 +9,7 @@
                 <label for="password" class="form-label d-flex justify-content-start">Mot de passe :</label>
                 <input type="password" class="form-control" name="password" id="password" />
             </div>
-            <button type="submit" class="btn btn-primary" @click.prevent="login">Se connecter</button>
+            <button type="submit" class="btn btn-danger" @click.prevent="login">Se connecter</button>
         </form>
     </div>
 </template>

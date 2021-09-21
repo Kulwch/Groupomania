@@ -7,12 +7,8 @@ import { faCog, faUsers, faUser, faQuoteLeft, faQuoteRight, faSignOutAlt, faPhot
 dom.watch()
 library.add(faCog, faUsers, faUser, faPhotoVideo, faQuoteRight, faQuoteLeft, faSignOutAlt)
 
-
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
-
+import './assets/custom.scss'
 
 createApp(App)
 .use(router)
-
 .mount('#app')

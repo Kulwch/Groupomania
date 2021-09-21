@@ -1,7 +1,7 @@
 <template>
     <navBar></navBar>
     <div id="profile" class="row">
-        <div class="col mx-auto border border-dark rounded shadow bg-light">
+        <div class="col mx-auto border border-dark rounded shadow bg-primary bg-gradient">
             <h2 class="h4 mt-3">Informations de profil</h2>
             <profileInfos></profileInfos>
             <br />

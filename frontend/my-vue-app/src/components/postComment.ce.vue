@@ -1,7 +1,7 @@
 <template>
     <div
         v-bind="$attrs"
-        class="col col-md-8 mx-auto mt-2 mb-2 border border-dark rounded shadow bg-light"
+        class="col col-md-8 mx-auto mt-2 mb-2 border border-dark rounded shadow bg-primary bg-gradient"
     >
         <h3 class="h5">Commenter ce gif</h3>
         <form class="mt-3">
@@ -18,7 +18,7 @@
             <button
                 v-bind="$attrs"
                 type="submit"
-                class="btn btn-primary mb-3"
+                class="btn btn-danger mb-3"
                 @click="postComment($attrs)"
                 ref="comment"
             >Publier</button>
@@ -27,6 +27,7 @@
 </template>
 <script>
 import axios from "axios"
+
 export default {
     name: "postComment",
 

@@ -1,6 +1,6 @@
 <template>
     <div id="home" class="row">
-        <div class="col col-md-6 mx-auto border border-dark rounded shadow bg-light">
+        <div class="col col-md-6 mx-auto border border-dark rounded shadow bg-primary bg-gradient">
             <h2 class="h4 mt-3">Connexion</h2>
             <loginForm />
             <br />
