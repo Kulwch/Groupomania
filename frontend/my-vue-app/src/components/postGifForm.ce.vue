@@ -1,12 +1,12 @@
 <template>
     <div class="col mx-auto border border-dark rounded shadow bg-primary bg-gradient">
         <h2 class>Publier un gif</h2>
-        <form id="form" class="mt-5" @submit.prevent="postGif()" enctype="multipart/form-data">
+        <form id="form" class="mt-5 was-validated" @submit.prevent="postGif()" enctype="multipart/form-data">
             <div class="mx-auto w-50 mb-3">
                 <label for="statusText" class="form-label">Statut :</label>
                 <input
                     type="statusText"
-                    class="form-control"
+                    class="form-control is-invalid"
                     id="statusText"
                     placeholder="Exemple: Quand on fait ceci..."
                     required
@@ -20,9 +20,10 @@
                     id="gif"
                     name="gif"
                     ref="gif"
-                    v-on:change="handleFileUpload()"
                     required
+                    v-on:change="handleFileUpload()"                    
                     >
+                    <div class="invalid-feedback">Vous devez absolument choisir un fichier à publier</div>
             </div>
             <button type="submit" class="btn btn-danger mb-3" @click.prevent="postGif">Publier</button>
         </form>
@@ -30,7 +31,6 @@
 </template>
 <script>
 import axios from 'axios'
-import { required, maxLength } from '@vuelidate/validators'
 
 export default {
     name: "postGifForm",
@@ -44,12 +44,6 @@ export default {
             token: localStorage.getItem('token')
         }
 
-    },
-
-    validations () {
-        return {
-            name: { required }
-        }
     },
 
     methods: {

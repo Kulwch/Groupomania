@@ -13,6 +13,7 @@
                     name="content"
                     ref="content"
                     placeholder="Tapez ici votre commentaire !"
+                    required
                 ></textarea>
             </div>
             <button
