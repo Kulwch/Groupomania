@@ -23,6 +23,11 @@ export default {
         loginForm,
     }, 
 
+    created() {
+        setTimeout(() => this.$router.push({ path: '/logout' }), 36000000);
+        
+    },
+
     data() {
         return {
             userId: localStorage.getItem("userId")

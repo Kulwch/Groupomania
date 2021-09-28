@@ -11,9 +11,13 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^3.0.0-4",
     "@popperjs/core": "^2.9.3",
+    "@vuelidate/core": "^2.0.0-alpha.26",
+    "@vuelidate/validators": "^2.0.0-alpha.22",
     "bootstrap": "^5.1.0",
     "bootstrap-vue": "^2.21.2",
     "eslint-plugin-vue": "^7.17.0",
+    "luxon": "^2.0.2",
+    "moment": "^2.29.1",
     "vue": "^3.2.8",
     "vue-router": "^4.0.11"
   },
