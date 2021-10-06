@@ -1,7 +1,7 @@
 ﻿A- Groupomania
 7th project in Openclassrooms junior webdeveloper course.
 
-Project's goal was to create a social meda application for a company.
+Project's goal was to create a social media application for a company.
 A choice had to be made between to features. Here the 9gag-like feature has been chosen.
 
 B- Features:
